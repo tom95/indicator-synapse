@@ -7,12 +7,13 @@ noinst_LTLIBRARIES = libplugins.la
 VAPIDIR = $(top_srcdir)/vapi
 
 libplugins_la_VALAFLAGS = \
-	--pkg gtk+-2.0 \
+	--pkg gtk+-3.0 \
 	--pkg gee-1.0 \
 	--pkg json-glib-1.0 \
 	--pkg dbus-glib-1 \
 	--pkg gio-unix-2.0 \
 	--pkg libnotify \
+	--pkg libsoup-2.4 \
 	--vapidir $(top_builddir)/src/core \
 	--pkg synapse-core \
 	--vapidir $(VAPIDIR) \
@@ -24,10 +25,11 @@ libplugins_la_CFLAGS = \
 	-include config.h -w \
 	-I$(top_builddir)/src/core \
 	$(NULL)
+
 libplugins_la_LIBADD = \
 	$(SYNAPSE_MODULES_LIBS) \
-	$(top_builddir)/src/core/libsynapsecore.la \
 	$(NULL)
+
 libplugins_la_VALASOURCES = \
 	banshee-plugin.vala \
 	calculator-plugin.vala \
@@ -53,6 +55,8 @@ libplugins_la_VALASOURCES = \
 	test-slow-plugin.vala \
 	xnoise-media-player-plugin.vala \
 	system-management.vala \
+	wolframalpha-plugin.vala \
+	filezilla-plugin.vala \
 	$(NULL)
 
 if HAVE_ZEITGEIST

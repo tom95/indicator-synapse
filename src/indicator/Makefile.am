@@ -1,11 +1,12 @@
 # vim: set ft=automake ts=8 sts=8 sw=8 :
 include $(top_srcdir)/Makefile.common
 
-bin_PROGRAMS = synapse
+synapselibdir = $(INDICATORDIR)
+synapselib_LTLIBRARIES = libsynapse.la
 
 VAPIDIR = $(top_srcdir)/vapi
 
-synapse_VALAFLAGS = \
+libsynapse_la_VALAFLAGS = \
 	--pkg dbus-glib-1 \
 	--pkg gtk+-3.0 \
 	--pkg gdk-x11-3.0 \
@@ -22,11 +23,12 @@ synapse_VALAFLAGS = \
 	--vapidir $(top_builddir)/src/plugins \
 	--pkg plugins \
 	--vapidir $(VAPIDIR) \
+	$(VAPIDIR)/indicator3-0.4.vapi \
 	$(VAPIDIR)/keysyms.vapi \
 	$(VAPIDIR)/config.vapi \
 	$(NULL)
 
-synapse_CFLAGS = \
+libsynapse_la_CFLAGS = \
 	$(SYNAPSE_MODULES_CFLAGS) \
 	-include config.h -w \
 	-DWNCK_I_KNOW_THIS_IS_UNSTABLE \
@@ -34,53 +36,64 @@ synapse_CFLAGS = \
 	-I$(top_builddir)/src/plugins \
 	$(NULL)
 
-synapse_LDADD = \
+libsynapse_la_LIBADD = \
 	$(SYNAPSE_MODULES_LIBS) \
 	$(top_builddir)/src/core/libsynapsecore.la \
 	$(top_builddir)/src/plugins/libplugins.la \
-	-lm
+	-lm \
+	$(NULL)
+
+libsynapse_la_LDFLAGS = \
+	-avoid-version \
+	-no-undefined \
+	-no_static \
+	-shared \
 	$(NULL)
 
 if HAVE_INDICATOR
-synapse_VALAFLAGS += --pkg appindicator-0.1 -D HAVE_INDICATOR
-synapse_CFLAGS += $(APP_INDICATOR_CFLAGS)
-synapse_LDADD += $(APP_INDICATOR_LIBS)
+libsynapse_la_VALAFLAGS += --pkg appindicator-0.1 -D HAVE_INDICATOR
+libsynapse_la_CFLAGS += $(APP_INDICATOR_CFLAGS)
+libsynapse_la_LIBADD += $(APP_INDICATOR_LIBS)
 endif
 
 if HAVE_LIBREST
-synapse_VALAFLAGS += -D HAVE_LIBREST
-synapse_CFLAGS += $(REST_CFLAGS)
-synapse_LDADD += $(REST_LIBS)
+libsynapse_la_VALAFLAGS += -D HAVE_LIBREST
+libsynapse_la_CFLAGS += $(REST_CFLAGS)
+libsynapse_la_LIBADD += $(REST_LIBS)
 endif
 
 if HAVE_ZEITGEIST
-synapse_VALAFLAGS += --pkg zeitgeist-1.0 -D HAVE_ZEITGEIST
-synapse_CFLAGS += $(ZEITGEIST_CFLAGS)
-synapse_LDADD += $(ZEITGEIST_LIBS)
+libsynapse_la_VALAFLAGS += --pkg zeitgeist-1.0 -D HAVE_ZEITGEIST
+libsynapse_la_CFLAGS += $(ZEITGEIST_CFLAGS)
+libsynapse_la_LIBADD += $(ZEITGEIST_LIBS)
 endif
 
-synapse_VALASOURCES = \
+libsynapse_la_VALASOURCES = \
 	main.vala \
-	Launcher.vala \
-	SearchEntry.vala \
-	Match.vala \
+	match-item.vala \
+	menu.vala \
 	$(NULL)
 
-GENERATED_C_FILES = $(synapse_VALASOURCES:.vala=.c)
-synapse_SOURCES = $(synapse_VALASOURCES:.vala=.c)
+GENERATED_C_FILES = $(libsynapse_la_VALASOURCES:.vala=.c)
+libsynapse_la_SOURCES = \
+	$(libsynapse_la_VALASOURCES:.vala=.c) \
+	indicator-search.c \
+	indicator-search.h \
+	$(NULL)
 
 # we can't let make handle this, otherwise tarballs won't support configure
 # flags (ie --disable-indicator won't rebuild the Vala sources)
 
-#synapse_vala.stamp: $(addprefix $(srcdir)/,$(synapse_VALASOURCES)) Makefile
-synapse_vala.stamp: $(synapse_VALASOURCES) Makefile
-	$(AM_V_VALA)$(VALAC) $(synapse_VALAFLAGS) $(VALAFLAGS) -C $(filter %.vala %.c,$^)
+$(builddir)/libsynapse.h: libsynapse_la_vala.stamp
+#libsynapse_la_vala.stamp: $(addprefix $(srcdir)/,$(libsynapse_la_VALASOURCES)) Makefile
+libsynapse_la_vala.stamp: $(libsynapse_la_VALASOURCES) Makefile
+	$(AM_V_VALA)$(VALAC) $(libsynapse_la_VALAFLAGS) $(VALAFLAGS) -C $(filter %.vala %.c,$^) -H libsynapse.h
 	$(AM_V_at)touch $@
 
-BUILT_SOURCES = synapse_vala.stamp
+BUILT_SOURCES = libsynapse_la_vala.stamp $(builddir)/libsynapse.h
 
-DISTCLEANFILES = $(GENERATED_C_FILES) synapse_vala.stamp
-EXTRA_DIST = $(synapse_VALASOURCES)
+DISTCLEANFILES = $(GENERATED_C_FILES) libsynapse_la_vala.stamp $(builddir)/libsynapse.h
+EXTRA_DIST = $(libsynapse_la_VALASOURCES)
 
 # need to make sure the vala sources are rebuilt
 dist-hook:

@@ -48,7 +48,7 @@ dnl ==============================================
 dnl Check that we meet the dependencies
 dnl ==============================================
 MIN_GLIB_VERSION=2.26.0
-MIN_GTK_VERSION=2.20.0
+MIN_GTK_VERSION=3.0.0
 MIN_ZEITGEIST_VERSION=0.3.14
 MIN_GEE_VERSION=0.5.2
 MIN_JSON_VERSION=0.10.0
@@ -56,14 +56,13 @@ APPINDICATOR_REQUIRED=0.0.7
 
 PKG_CHECK_MODULES(SYNAPSE_MODULES, \
   glib-2.0 >= $MIN_GLIB_VERSION \
-  gtk+-2.0 >= $MIN_GTK_VERSION \
-  gtkhotkey-1.0 \
+  gtk+-3.0 >= $MIN_GTK_VERSION \
   gobject-2.0 \
   gee-1.0 >= $MIN_GEE_VERSION \
   gio-unix-2.0 \
   json-glib-1.0 >= $MIN_JSON_VERSION \
   libnotify \
-  unique-1.0 \
+  indicator3-0.4 \
   )
 
 
@@ -81,6 +80,12 @@ AC_ARG_ENABLE(zeitgeist,
              AS_HELP_STRING([--enable-zeitgeist[=@<:@no/yes@:>@]],[Build with zeitgeist support]),
              [enable_zeitgeist=$enableval],
              [enable_zeitgeist="yes"])
+
+dnl Retrieve indicator installation directories
+INDICATORDIR=`$PKG_CONFIG --variable=indicatordir indicator3-0.4`
+INDICATORICONSDIR=`$PKG_CONFIG --variable=iconsdir indicator3-0.4`
+AC_SUBST(INDICATORDIR)
+AC_SUBST(INDICATORICONSDIR)
 
 dnl ==============================================
 dnl Check that we meet the optional dependencies
@@ -140,6 +145,7 @@ src/core/Makefile
 src/plugins/Makefile
 src/tile-view/Makefile
 src/ui/Makefile
+src/indicator/Makefile
 po/Makefile.in
 vapi/Makefile
 ])

@@ -24,7 +24,7 @@ with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include <gio/gio.h>
 
 #include "indicator-search.h"
-#include "search.h"
+#include "libsynapse.h"
 
 #define ICON "edit-find"
 
