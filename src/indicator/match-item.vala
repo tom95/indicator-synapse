@@ -3,7 +3,8 @@ public class MatchItem : Gtk.MenuItem
 {
 	public Synapse.Match? match { get; private set; }
 	public Synapse.Match? target { get; private set; }
-	Gtk.Box box;
+	public Gtk.Widget inner_box { get; private set; }
+	public Gtk.Box outer_box { get; private set; }
 	Gtk.Label category;
 
 	static Gtk.Widget get_box (string title, string icon, bool large)
@@ -35,17 +36,19 @@ public class MatchItem : Gtk.MenuItem
 		draw.connect (draw_separator);
 	}
 
-	public MatchItem (string _category, Gtk.Widget inner_box, bool no_hover = false)
+	public MatchItem (string _category, Gtk.Widget _inner_box, bool no_hover = false)
 	{
-		box = new Gtk.Box (Gtk.Orientation.HORIZONTAL, 6);
+		outer_box = new Gtk.Box (Gtk.Orientation.HORIZONTAL, 6);
 		category = new Gtk.Label (_category);
 		category.width_request = 90;
 		category.xalign = 0.8f;
 
-		box.pack_start (category, false);
-		box.pack_start (inner_box);
-		box.margin_right = 12;
-		add (box);
+		inner_box = _inner_box;
+
+		outer_box.pack_start (category, false);
+		outer_box.pack_start (inner_box);
+		outer_box.margin_right = 12;
+		add (outer_box);
 
 		if (no_hover) {
 			leave_notify_event.connect (() => { return true; });

@@ -10,13 +10,13 @@ public class Menu : Gtk.Menu
 	{
 		entry = new Gtk.Entry ();
 
-		entry.margin_right = entry.margin_bottom = 12;
 		entry.primary_icon_name = "edit-find-symbolic";
 		entry_item = new MatchItem ("Search:", entry, true);
 		append (entry_item);
-		entry_item.button_release_event.connect ((e) => {
-			return true;
-		});
+
+		// block any clicks on the item
+		entry_item.button_release_event.connect ((e) => { return true; });
+		entry_item.button_press_event.connect ((e) => { return true; });
 		entry_item.draw.connect ((cr) => {
 			if (get_children ().length () < 2)
 				return false;
@@ -62,6 +62,8 @@ public class Menu : Gtk.Menu
 	public void show_matches (Gee.List<Synapse.Match> matches)
 	{
 		clear ();
+
+		entry_item.outer_box.margin_bottom = 12;
 
 		var current_type = -2;
 		foreach (var match in matches) {
@@ -118,6 +120,7 @@ public class Menu : Gtk.Menu
 
 	public void clear ()
 	{
+		entry_item.outer_box.margin_bottom = 0;
 		foreach (var child in get_children ()) {
 			if (child == entry_item)
 				continue;
