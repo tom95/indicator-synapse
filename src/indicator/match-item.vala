@@ -41,7 +41,8 @@ public class MatchItem : Gtk.MenuItem
 		outer_box = new Gtk.Box (Gtk.Orientation.HORIZONTAL, 6);
 		category = new Gtk.Label (_category);
 		category.width_request = 90;
-		category.xalign = 0.8f;
+		category.xalign = 1.0f;
+		category.margin_right = 12;
 
 		inner_box = _inner_box;
 
@@ -58,7 +59,7 @@ public class MatchItem : Gtk.MenuItem
 
 	bool draw_separator (Cairo.Context cr)
 	{
-		cr.move_to (category.get_allocated_width () + 30.5, 0);
+		cr.move_to (category.get_allocated_width () + 18.5, 0);
 		cr.rel_line_to (0, get_allocated_height ());
 		cr.set_source_rgba (0, 0, 0, 0.2);
 		cr.set_line_width (1);

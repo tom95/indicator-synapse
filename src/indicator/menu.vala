@@ -8,6 +8,9 @@ public class Menu : Gtk.Menu
 
 	public Menu ()
 	{
+		reserve_toggle_size = false;
+		take_focus = true;
+
 		entry = new Gtk.Entry ();
 
 		entry.primary_icon_name = "edit-find-symbolic";
@@ -44,6 +47,17 @@ public class Menu : Gtk.Menu
 					else
 						search (entry.text);
 					return true;
+			}
+		});
+
+		move_current.connect ((dir) => {
+			// see if the next item will be the search entry
+			var next = get_children ().index (get_selected_item ()) +
+				(dir == Gtk.MenuDirectionType.NEXT ? 1 : -1);
+			// if so, select it so the move which comes after we're
+			// done here will skip it
+			if (next == 0 || next == get_children ().length ()) {
+				select_item (entry_item);
 			}
 		});
 
