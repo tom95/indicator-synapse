@@ -1,4 +1,5 @@
 data/synapse.desktop.in
+src/indicator/menu.vala
 src/ui/synapse-main.vala
 src/ui/interfaces.vala
 src/ui/keybindings.vala
@@ -26,6 +27,7 @@ src/plugins/devhelp-search.vala
 src/plugins/dictionary.vala
 src/plugins/directory-plugin.vala
 src/plugins/file-op-plugin.vala
+src/plugins/filezilla-plugin.vala
 src/plugins/gnome-screensaver-plugin.vala
 src/plugins/hybrid-search-plugin.vala
 src/plugins/imgur-plugin.vala
@@ -38,6 +40,7 @@ src/plugins/rhythmbox-plugin.vala
 src/plugins/selection-plugin.vala
 src/plugins/ssh-plugin.vala
 src/plugins/system-management.vala
+src/plugins/wolframalpha-plugin.vala
 src/plugins/xnoise-media-player-plugin.vala
 src/plugins/zeitgeist-plugin.vala
 src/plugins/zeitgeist-related.vala

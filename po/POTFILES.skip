@@ -1,3 +1,4 @@
+src/indicator/menu.c
 src/ui/synapse-main.c
 src/ui/interfaces.c
 src/ui/keybindings.c
@@ -25,6 +26,7 @@ src/plugins/devhelp-search.c
 src/plugins/dictionary.c
 src/plugins/directory-plugin.c
 src/plugins/file-op-plugin.c
+src/plugins/filezilla-plugin.c
 src/plugins/gnome-screensaver-plugin.c
 src/plugins/gnome-session-plugin.c
 src/plugins/hello-world-plugin.c
@@ -39,6 +41,7 @@ src/plugins/rhythmbox-plugin.c
 src/plugins/selection-plugin.c
 src/plugins/ssh-plugin.c
 src/plugins/system-management.c
+src/plugins/wolframalpha-plugin.c
 src/plugins/xnoise-media-player-plugin.c
 src/plugins/zeitgeist-plugin.c
 src/plugins/zeitgeist-related.c
