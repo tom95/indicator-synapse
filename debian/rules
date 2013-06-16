@@ -1,15 +1,15 @@
 #!/usr/bin/make -f
 
 %:
-	dh $@
+	dh $@ --parallel
 
 override_dh_auto_configure:
 	./autogen.sh
 	dh_auto_configure -- --enable-indicator=auto
 
 override_dh_install:
-	dh_install --fail-missing
+	dh_install -X.a -X.la --fail-missing
 
 override_dh_strip:
-	dh_strip --dbg-package=synapse-dbg
+	dh_strip --dbg-package=indicator-synapse-dbg
 

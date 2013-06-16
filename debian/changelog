@@ -1,5 +1,12 @@
-synapse (0.2.0+bzr-2) UNRELEASED; urgency=low
+indicator-synapse (0.0-1) UNRELEASED; urgency=low
 
+  * Initial release
+
+ -- Rico Tzschichholz <ricotz@ubuntu.com>  Sun, 16 Jun 2013 11:42:08 +0200
+
+synapse (0.2.0+bzr-2) pUNRELEASED; urgency=low
+
+  [ Julien Lavergne ]
   * debian/control:
    - Set zeitgeist and zeitgeist-fts-extension as Recommends.
    - Bump libgtk2.0-dev, libglib2.0-dev and intltool requierement.
