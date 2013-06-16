@@ -26,7 +26,7 @@ with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include "indicator-search.h"
 #include "libsynapse.h"
 
-#define ICON "edit-find"
+#define ICON "edit-find-symbolic"
 
 struct _IndicatorSearchPrivate
 {
@@ -97,8 +97,8 @@ indicator_search_init (IndicatorSearch *self)
   priv->label = GTK_LABEL (gtk_label_new (""));
   g_object_ref_sink (priv->label);
 
-  gicon = g_themed_icon_new (ICON);
-  priv->status_image = GTK_IMAGE (gtk_image_new_from_gicon (gicon, GTK_ICON_SIZE_LARGE_TOOLBAR));
+  gicon = g_themed_icon_new_with_default_fallbacks (ICON);
+  priv->status_image = GTK_IMAGE (gtk_image_new_from_gicon (gicon, GTK_ICON_SIZE_MENU));
   g_object_ref_sink (priv->status_image);
   g_object_unref (gicon);
   gtk_widget_show (GTK_WIDGET (priv->status_image));
