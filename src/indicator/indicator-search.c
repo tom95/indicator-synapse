@@ -91,6 +91,7 @@ indicator_search_init (IndicatorSearch *self)
   priv->main = main_new ();
   priv->accessible_desc = NULL;
   priv->menu = main_get_menu (priv->main);
+  gtk_widget_show_all (GTK_WIDGET(priv->menu));
 
   self->priv = priv;
   priv->label = GTK_LABEL (gtk_label_new (""));

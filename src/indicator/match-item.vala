@@ -11,6 +11,7 @@ public class MatchItem : Gtk.MenuItem
 		var inner_box = new Gtk.Box (Gtk.Orientation.HORIZONTAL, 12);
 		var label = new Gtk.Label (title);
 		label.xalign = 0.0f;
+		label.ellipsize = Pango.EllipsizeMode.MIDDLE;
 		inner_box.pack_start (new Gtk.Image.from_pixbuf (find_icon (icon, 16)), false);
 		inner_box.pack_start (label);
 

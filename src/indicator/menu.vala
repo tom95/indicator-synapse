@@ -10,6 +10,25 @@ public class Menu : Gtk.Menu
 	{
 		entry = new Gtk.Entry ();
 
+		entry.margin_right = entry.margin_bottom = 12;
+		entry.primary_icon_name = "edit-find-symbolic";
+		entry_item = new MatchItem ("Search:", entry, true);
+		append (entry_item);
+		entry_item.button_release_event.connect ((e) => {
+			return true;
+		});
+		entry_item.draw.connect ((cr) => {
+			if (get_children ().length () < 2)
+				return false;
+
+			cr.move_to (0, entry_item.get_allocated_height () - 0.5);
+			cr.rel_line_to (entry_item.get_allocated_width (), 0);
+			cr.set_line_width (1);
+			cr.set_source_rgba (0, 0, 0, 0.2);
+			cr.stroke ();
+			return false;
+		});
+
 		key_press_event.connect ((e) => {
 			switch (e.keyval) {
 				case Gdk.Key.Escape:
@@ -28,25 +47,16 @@ public class Menu : Gtk.Menu
 			}
 		});
 
-		entry.margin_right = entry.margin_bottom = 12;
-		entry.margin_top = 6;
-		entry.primary_icon_name = "edit-find-symbolic";
-		entry_item = new MatchItem ("Search:", entry, true);
-		append (entry_item);
-		entry_item.button_release_event.connect ((e) => {
-			return true;
-		});
-		entry_item.draw.connect ((cr) => {
-			if (get_children ().length () < 2)
-				return false;
+		width_request = 480;
+	}
 
-			cr.move_to (0, entry_item.get_allocated_height () - 0.5);
-			cr.rel_line_to (entry_item.get_allocated_width (), 0);
-			cr.set_line_width (1);
-			cr.set_source_rgba (0, 0, 0, 0.2);
-			cr.stroke ();
-			return false;
-		});
+	public override void show ()
+	{
+		clear ();
+		entry.text = "";
+		base.show ();
+		grab_focus ();
+		entry.grab_focus ();
 	}
 
 	public void show_matches (Gee.List<Synapse.Match> matches)
