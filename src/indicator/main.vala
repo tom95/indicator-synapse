@@ -1,6 +1,8 @@
 
 public class Main : Object
 {
+	const string shortcut = "<super><alt>space";
+
 	// backend synapse initialization
 	Type[] plugins = {
         typeof (Synapse.DesktopFilePlugin),
@@ -62,6 +64,28 @@ public class Main : Object
 				} catch (Error e) { warning (e.message); }
 			});
 		});
+
+		// shortcut
+		Keybinder.init ();
+		Keybinder.bind (shortcut, (key, data) => {
+
+			var self = (Main)data;
+			// unfortunately things are not that easy here. Gtk throws an error about no device
+			// when trying to grab. Waiting until the key is released solves this problem, so
+			// we keep checking if we see something already
+			Idle.add (() => {
+				if (!self.menu.visible)
+					self.show_menu ();
+				return !self.menu.visible;
+			});
+			self.show_menu ();
+		}, this);
+	}
+
+	public void show_menu ()
+	{
+		(menu.get_attach_widget () as Gtk.MenuItem).activate_item ();
+		menu.deselect ();
 	}
 }
 

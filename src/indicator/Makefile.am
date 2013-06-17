@@ -18,6 +18,7 @@ libsynapse_la_VALAFLAGS = \
 	--pkg clutter-gtk-1.0 \
 	--pkg libwnck-3.0 \
 	--pkg granite \
+	--pkg keybinder-3.0 \
 	--vapidir $(top_builddir)/src/core \
 	--pkg synapse-core \
 	--vapidir $(top_builddir)/src/plugins \
