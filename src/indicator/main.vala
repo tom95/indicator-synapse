@@ -1,8 +1,6 @@
 
 public class Main : Object
 {
-	const string shortcut = "<super><alt>space";
-
 	// backend synapse initialization
 	Type[] plugins = {
         typeof (Synapse.DesktopFilePlugin),
@@ -39,6 +37,7 @@ public class Main : Object
 	public static Synapse.DataSink sink;
 	public Menu menu { get; private set; }
 
+	string? current_shortcut;
 	Cancellable? current_search = null;
 
 	public Main ()
@@ -67,19 +66,16 @@ public class Main : Object
 
 		// shortcut
 		Keybinder.init ();
-		Keybinder.bind (shortcut, (key, data) => {
+		Settings.get_default ().changed.connect (() => {
+			update_shortcut ();
+		});
+		update_shortcut ();
+	}
 
-			var self = (Main)data;
-			// unfortunately things are not that easy here. Gtk throws an error about no device
-			// when trying to grab. Waiting until the key is released solves this problem, so
-			// we keep checking if we see something already
-			Idle.add (() => {
-				if (!self.menu.visible)
-					self.show_menu ();
-				return !self.menu.visible;
-			});
-			self.show_menu ();
-		}, this);
+	public void update_shortcut ()
+	{
+		current_shortcut = Settings.get_default ().shortcut;
+		Keybinder.bind (current_shortcut, handle_shortcut, this);
 	}
 
 	public void show_menu ()
@@ -102,5 +98,19 @@ public static Gdk.Pixbuf? find_icon (string name, int size)
 	} catch (Error e) { warning (e.message); }
 
 	return null;
+}
+
+public static void handle_shortcut (string key, void* data)
+{
+	var self = (Main)data;
+	// unfortunately things are not that easy here. Gtk throws an error about no device
+	// when trying to grab. Waiting until the key is released solves this problem, so
+	// we keep checking if we see something already
+	Idle.add (() => {
+		if (!self.menu.visible)
+			self.show_menu ();
+		return !self.menu.visible;
+	});
+	self.show_menu ();
 }
 

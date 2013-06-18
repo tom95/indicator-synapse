@@ -49,3 +49,7 @@ m4/ltsugar.m4
 m4/ltversion.m4
 m4/lt~obsolete.m4
 src/core/SynapseCore-1.0.gir
+data/gschemas.compiled
+data/net.launchpad.indicator-synapse.gschema.valid
+data/net.launchpad.indicator-synapse.gschema.xml
+data/net.launchpad.indicator-synapse.gschema.xml.in

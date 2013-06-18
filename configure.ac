@@ -64,6 +64,7 @@ PKG_CHECK_MODULES(SYNAPSE_MODULES, \
   libnotify \
   keybinder-3.0 \
   indicator3-0.4 \
+  granite \
   )
 
 
@@ -81,6 +82,8 @@ AC_ARG_ENABLE(zeitgeist,
              AS_HELP_STRING([--enable-zeitgeist[=@<:@no/yes@:>@]],[Build with zeitgeist support]),
              [enable_zeitgeist=$enableval],
              [enable_zeitgeist="yes"])
+
+GLIB_GSETTINGS
 
 dnl Retrieve indicator installation directories
 INDICATORDIR=`$PKG_CONFIG --variable=indicatordir indicator3-0.4`

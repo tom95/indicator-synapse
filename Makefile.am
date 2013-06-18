@@ -2,6 +2,7 @@ SUBDIRS = \
 	src \
 	vapi \
 	po \
+	data \
 	$(NULL)
 
 #	data

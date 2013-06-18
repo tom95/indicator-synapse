@@ -73,6 +73,7 @@ libsynapse_la_VALASOURCES = \
 	main.vala \
 	match-item.vala \
 	menu.vala \
+	settings.vala \
 	$(NULL)
 
 GENERATED_C_FILES = $(libsynapse_la_VALASOURCES:.vala=.c)
