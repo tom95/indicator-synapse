@@ -46,9 +46,7 @@ all-local: gschemas.compiled
 #	$(foreach size,$(ICONSIZES),\
 #	rm -f $(DESTDIR)$(datadir)/icons/hicolor/$(size)x$(size)/apps/$(APP_ICON_NAME).png;)
 
-EXTRA_DIST =            \
-        #$(svgicon_DATA) \
-	synapse.desktop.in \
+EXTRA_DIST = \ #$(svgicon_DATA) \ #synapse.desktop.in \
 	net.launchpad.synapse-project.gschema.xml.in.in \
         $(NULL)
 
