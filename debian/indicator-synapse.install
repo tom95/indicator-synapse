@@ -1,1 +1,2 @@
-usr/lib
+usr/lib/indicators3/*/libsynapse.so
+usr/share/glib-2.0/schemas/org.synapse-project.indicator.gschema.xml
