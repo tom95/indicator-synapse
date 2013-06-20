@@ -1,11 +1,9 @@
 SUBDIRS = \
+	data \
 	src \
 	vapi \
 	po \
-	data \
 	$(NULL)
-
-#	data
 
 ACLOCAL_AMFLAGS = -I m4
 
