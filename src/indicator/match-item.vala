@@ -7,6 +7,8 @@ public class MatchItem : Gtk.MenuItem
 	public Gtk.Box outer_box { get; private set; }
 	Gtk.Label category;
 
+	public signal void do_search (Synapse.Match match, Synapse.Match target);
+
 	static Gtk.Widget get_box (string title, string icon, bool large)
 	{
 		var inner_box = new Gtk.Box (Gtk.Orientation.HORIZONTAL, 12);
@@ -34,6 +36,13 @@ public class MatchItem : Gtk.MenuItem
 		match = action;
 		target = _target;
 		draw.connect (draw_separator);
+	}
+
+	public MatchItem.contextual (Synapse.Match action, Synapse.Match _target, bool large)
+	{
+		add (get_box (action.description, action.icon_name, large));
+		match = action;
+		target = _target;
 	}
 
 	public MatchItem (string _category, Gtk.Widget _inner_box, bool no_hover = false)
@@ -71,6 +80,11 @@ public class MatchItem : Gtk.MenuItem
 	{
 		if (match == null)
 			return;
+
+		if (match.match_type == Synapse.MatchType.SEARCH) {
+			// searches are implemented by blocking key presses
+			return;
+		}
 
 		if (target != null)
 			match.execute_with_target (target);

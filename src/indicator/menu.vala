@@ -40,6 +40,10 @@ public class Menu : Gtk.Menu
 				case Gdk.Key.Return:
 				case Gdk.Key.KP_Enter:
 					return false;
+				case Gdk.Key.Left:
+				case Gdk.Key.Right:
+					show_context_menu ();
+					return true;
 				default:
 					entry.key_press_event (e);
 					if (entry.text == "")
@@ -140,6 +144,55 @@ public class Menu : Gtk.Menu
 				continue;
 			child.destroy ();
 		}
+	}
+
+	public void do_search (Synapse.Match match, Synapse.Match target)
+	{
+		clear ();
+
+		var search = match as Synapse.SearchMatch;
+		search.search_source = target;
+
+		search.search (entry.text, Synapse.QueryFlags.ALL, null, null, (obj, res) => {
+			var matches = search.search.end (res);
+			show_matches (matches);
+		});
+	}
+
+	public void show_context_menu ()
+	{
+		var active = get_selected_item () as MatchItem;
+		var menu = new Gtk.Menu ();
+		menu.key_press_event.connect (take_arrow_keys);
+
+		var actions = Main.sink.find_actions_for_match (active.match, null, Synapse.QueryFlags.ALL);
+		foreach (var action in actions) {
+			var item = new MatchItem.contextual (action, active.match, false);
+			menu.append (item);
+		}
+
+		menu.show_all ();
+		active.submenu = menu;
+		active.activate_item ();
+	}
+
+	bool take_arrow_keys (Gtk.Widget menu, Gdk.EventKey event)
+	{
+		switch (event.keyval) {
+			case Gdk.Key.Left:
+			case Gdk.Key.Right:
+				(menu as Gtk.Menu).popdown ();
+				menu.destroy ();
+				return true;
+			case Gdk.Key.Return:
+				var item = (menu as Gtk.Menu).get_selected_item () as MatchItem;
+				var is_search = item.match.match_type == Synapse.MatchType.SEARCH;
+				if (is_search)
+					do_search (item.match, item.target);
+				return is_search;
+		}
+
+		return false;
 	}
 }
 
