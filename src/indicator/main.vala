@@ -66,15 +66,12 @@ public class Main : Object
 
 		// shortcut
 		Keybinder.init ();
-		Settings.get_default ().changed.connect (() => {
-			update_shortcut ();
-		});
 		update_shortcut ();
 	}
 
 	public void update_shortcut ()
 	{
-		current_shortcut = Settings.get_default ().shortcut;
+		current_shortcut = "<super><alt>space";
 		Keybinder.bind (current_shortcut, handle_shortcut, this);
 	}
 

@@ -60,8 +60,7 @@ PKG_CHECK_MODULES(SYNAPSE_MODULES, \
   libnotify \
   libsoup-2.4 \
   keybinder-3.0 \
-  indicator3-0.4 \
-  granite
+  indicator3-0.4
   )
 
 

@@ -17,7 +17,6 @@ libsynapse_la_VALAFLAGS = \
 	--pkg libnotify \
 	--pkg clutter-gtk-1.0 \
 	--pkg libwnck-3.0 \
-	--pkg granite \
 	--pkg keybinder-3.0 \
 	--vapidir $(top_builddir)/src/core \
 	--pkg synapse-core \
@@ -72,7 +71,6 @@ libsynapse_la_VALASOURCES = \
 	main.vala \
 	match-item.vala \
 	menu.vala \
-	settings.vala \
 	$(NULL)
 
 GENERATED_C_FILES = $(libsynapse_la_VALASOURCES:.vala=.c)
