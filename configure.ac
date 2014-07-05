@@ -79,8 +79,6 @@ AC_ARG_ENABLE(zeitgeist,
              [enable_zeitgeist=$enableval],
              [enable_zeitgeist="yes"])
 
-GLIB_GSETTINGS
-
 dnl Retrieve indicator installation directories
 INDICATORDIR=`$PKG_CONFIG --variable=indicatordir indicator3-0.4`
 INDICATORICONSDIR=`$PKG_CONFIG --variable=iconsdir indicator3-0.4`

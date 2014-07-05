@@ -1,9 +1,9 @@
 include $(top_srcdir)/Makefile.common
 
 SUBDIRS = \
-	data \
 	src \
 	vapi \
+	data \
 	po \
 	$(NULL)
 

@@ -1,4 +1,3 @@
-data/net.launchpad.synapse-project.gschema.xml.in.in
 data/synapse.desktop.in
 src/indicator/menu.vala
 src/ui/synapse-main.vala
