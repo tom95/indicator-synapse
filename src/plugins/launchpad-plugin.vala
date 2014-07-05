@@ -39,7 +39,7 @@ namespace Synapse
     
     public Gtk.Widget create_config_widget ()
     {
-      var box = new Gtk.VBox (false, 0);
+      var box = new Gtk.Box (Gtk.Orientation.VERTICAL, 0);
       box.show ();
 
       var authorize_button = new Gtk.Button.with_label (_("Authorize with Launchpad"));
@@ -212,7 +212,7 @@ namespace Synapse
         call.run_async ((call_obj, error, obj) =>
         {
           err = error;
-          auth_step1.callback ();
+          auth_step3.callback ();
         }, this);
         yield;
 

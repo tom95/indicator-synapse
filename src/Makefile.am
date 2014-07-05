@@ -1,9 +1,10 @@
+include $(top_srcdir)/Makefile.common
+
 SUBDIRS = \
 	core \
 	plugins \
+	tile-view \
+	ui \
 	indicator \
 	$(NULL)
 
-# FIXME needs to be ported to gtk3
-#	tile-view
-#	ui

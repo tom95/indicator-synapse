@@ -1,38 +1,34 @@
-AC_INIT([synapse], [0.2.11])
+AC_INIT([synapse], [0.2.99])
 AC_DEFINE(RELEASE_NAME, "Cholecystokinin", "Codename of this release")
 
+AC_PREREQ([2.65])
+
 AC_CONFIG_MACRO_DIR([m4])
+AC_CONFIG_AUX_DIR([build-aux])
 AC_CONFIG_SRCDIR([.])
 AC_CONFIG_HEADERS([config.h])
 
-AM_INIT_AUTOMAKE([1.11 -Wno-portability])
+AM_INIT_AUTOMAKE([1.11 tar-ustar dist-xz no-dist-gzip -Wno-portability subdir-objects])
 
-dnl -- Populate top_srcdir variable
-top_srcdir=$(readlink -f $0 | sed -e s/configure$//)
+AM_MAINTAINER_MODE
 
 dnl ==============================================
 dnl Translation support
 dnl ==============================================
 
-GETTEXT_PACKAGE=synapse
+GETTEXT_PACKAGE=AC_PACKAGE_NAME
 AC_SUBST(GETTEXT_PACKAGE)
-AC_DEFINE_UNQUOTED(GETTEXT_PACKAGE,"$GETTEXT_PACKAGE", [Gettext package])
-ALL_LINGUAS=`ls ${top_srcdir}/po/*.po | sed 's/.po$//' | sed 's/.*\///' | tr '\n' ' '`
+AC_DEFINE_UNQUOTED(GETTEXT_PACKAGE, ["$GETTEXT_PACKAGE"], [Define the gettext package to be used])
+IT_PROG_INTLTOOL([0.35.0])
 
-IT_PROG_INTLTOOL([0.35])
-AM_GLIB_GNU_GETTEXT
-
-dnl pkg-config
-AC_PATH_PROG(PKG_CONFIG, pkg-config, no)
-if test "x$PKG_CONFIG" = "xno"; then
-        AC_MSG_ERROR([You need to install pkg-config])
-fi
+PKG_PROG_PKG_CONFIG([0.21])
 
 AC_PROG_INSTALL
 AC_PROG_CC
 AM_PROG_CC_C_O
-AC_PROG_LIBTOOL
-AC_STDC_HEADERS
+LT_INIT
+
+LT_LIB_M
 
 dnl ==============================================
 dnl Check for Vala
@@ -47,25 +43,25 @@ AM_SILENT_RULES([yes])
 dnl ==============================================
 dnl Check that we meet the dependencies
 dnl ==============================================
-MIN_GLIB_VERSION=2.26.0
+MIN_GLIB_VERSION=2.28.0
 MIN_GTK_VERSION=3.0.0
-MIN_ZEITGEIST_VERSION=0.3.14
+MIN_ZEITGEIST_VERSION=0.9.14
 MIN_GEE_VERSION=0.5.2
 MIN_JSON_VERSION=0.10.0
-APPINDICATOR_REQUIRED=0.0.7
 
 PKG_CHECK_MODULES(SYNAPSE_MODULES, \
   glib-2.0 >= $MIN_GLIB_VERSION \
   gtk+-3.0 >= $MIN_GTK_VERSION \
   gobject-2.0 \
-  gee-1.0 >= $MIN_GEE_VERSION \
+  gee-0.8 >= $MIN_GEE_VERSION \
   gio-unix-2.0 \
+  keybinder-3.0 \
   json-glib-1.0 >= $MIN_JSON_VERSION \
   libnotify \
   libsoup-2.4 \
   keybinder-3.0 \
   indicator3-0.4 \
-  granite \
+  granite
   )
 
 
@@ -97,23 +93,23 @@ dnl Check that we meet the optional dependencies
 dnl ==============================================
 
 if test "x$enable_zeitgeist" = "xyes" ; then
-	PKG_CHECK_EXISTS([zeitgeist-1.0 >= $MIN_ZEITGEIST_VERSION],,
-	                 AC_MSG_ERROR([zeitgeist-1.0 is not installed]))
-	PKG_CHECK_MODULES(ZEITGEIST, zeitgeist-1.0 >= $MIN_ZEITGEIST_VERSION)
+	PKG_CHECK_EXISTS([zeitgeist-2.0 >= $MIN_ZEITGEIST_VERSION],,
+	                 AC_MSG_ERROR([zeitgeist-2.0 is not installed]))
+	PKG_CHECK_MODULES(ZEITGEIST, zeitgeist-2.0 >= $MIN_ZEITGEIST_VERSION)
 	AC_DEFINE(HAVE_ZEITGEIST, 1, [Have Zeitgeist])
 fi
 AM_CONDITIONAL(HAVE_ZEITGEIST, test "x$enable_zeitgeist" = "xyes")
 
 if test "x$enable_indicator" = "xauto" ; then
-	PKG_CHECK_EXISTS([appindicator-0.1 >= $APPINDICATOR_REQUIRED],
+	PKG_CHECK_EXISTS([appindicator3-0.1],
 	                 enable_indicator="yes",
 	                 enable_indicator="no")
 fi
 
 if test "x$enable_indicator" = "xyes" ; then
-	PKG_CHECK_EXISTS([appindicator-0.1 >= $APPINDICATOR_REQUIRED],,
-	                 AC_MSG_ERROR([appindicator-0.1 is not installed]))
-	PKG_CHECK_MODULES(APP_INDICATOR, appindicator-0.1 >= $APPINDICATOR_REQUIRED)
+	PKG_CHECK_EXISTS([appindicator3-0.1],,
+	                 AC_MSG_ERROR([appindicator3-0.1 is not installed]))
+	PKG_CHECK_MODULES(APP_INDICATOR, appindicator3-0.1)
 	AC_DEFINE(HAVE_INDICATOR, 1, [Have AppIndicator])
 fi
 AM_CONDITIONAL(HAVE_INDICATOR, test "x$enable_indicator" = "xyes")
@@ -132,15 +128,6 @@ if test "x$enable_librest" = "xyes" ; then
 	AC_DEFINE(HAVE_LIBREST, 1, [Have librest])
 fi
 AM_CONDITIONAL(HAVE_LIBREST, test "x$enable_librest" = "xyes")
-
-dnl Expansions
-AS_AC_EXPAND([PKGDATADIR], [$datadir/$PACKAGE_NAME])
-AS_AC_EXPAND([DATADIR], [$datadir])
-dnl AS_AC_EXPAND([LIBDIR], [$libdir])
-dnl AS_AC_EXPAND([LIBEXECDIR], [$libexecdir])
-
-AC_DEFINE_UNQUOTED(PKGDATADIR, "$PKGDATADIR", [Package base directory])
-AC_DEFINE_UNQUOTED(DATADIR, "$DATADIR", [Data directory])
 
 AC_CONFIG_FILES([
 Makefile

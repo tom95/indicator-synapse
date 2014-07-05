@@ -7,15 +7,16 @@ VAPIDIR = $(top_srcdir)/vapi
 
 libsynapsecore_la_VALAFLAGS = \
 	--pkg gtk+-3.0 \
-	--pkg gee-1.0 \
+	--pkg gee-0.8 \
 	--pkg json-glib-1.0 \
 	--pkg dbus-glib-1 \
 	--pkg gio-unix-2.0 \
 	--vapidir $(VAPIDIR) \
 	$(VAPIDIR)/config.vapi \
+	-g \
 	$(NULL)
 
-libsynapsecore_la_CFLAGS = $(SYNAPSE_MODULES_CFLAGS) -include config.h -w -lm
+libsynapsecore_la_CFLAGS = $(SYNAPSE_MODULES_CFLAGS) -include config.h -w $(LIBM)
 libsynapsecore_la_LIBADD = $(SYNAPSE_MODULES_LIBS)
 libsynapsecore_la_VALASOURCES = \
 	common-actions.vala \
@@ -34,7 +35,7 @@ libsynapsecore_la_VALASOURCES = \
 
 if HAVE_ZEITGEIST
 libsynapsecore_la_VALASOURCES += relevancy-backend-zg.vala
-libsynapsecore_la_VALAFLAGS += --pkg zeitgeist-1.0 -D HAVE_ZEITGEIST
+libsynapsecore_la_VALAFLAGS += --pkg zeitgeist-2.0 -D HAVE_ZEITGEIST
 libsynapsecore_la_CFLAGS += $(ZEITGEIST_CFLAGS)
 libsynapsecore_la_LIBADD += $(ZEITGEIST_LIBS)
 endif
@@ -45,7 +46,7 @@ libsynapsecore_la_SOURCES = \
 	$(NULL)
 
 synapse-core.vapi synapse-core.vala.stamp: $(libsynapsecore_la_VALASOURCES) Makefile
-	$(AM_V_VALA)$(VALAC) $(libsynapsecore_la_VALAFLAGS) -C -H synapse-core.h --library synapse-core --gir SynapseCore-1.0.gir $(filter %.vala %.c,$^)
+	$(AM_V_VALA)$(VALAC) $(libsynapsecore_la_VALAFLAGS) -C -H synapse-core.h --library synapse-core $(filter %.vala %.c,$^)
 	touch $@
 
 BUILT_SOURCES = synapse-core.vala.stamp
@@ -59,7 +60,6 @@ DISTCLEANFILES = \
 	synapse-core.vala.stamp \
 	synapse-core.vapi \
 	synapse-core.h \
-	SynapseCore-1.0.gir \
 	$(NULL)
 
 dist-hook:

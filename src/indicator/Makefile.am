@@ -12,7 +12,7 @@ libsynapse_la_VALAFLAGS = \
 	--pkg gdk-x11-3.0 \
 	--pkg gio-2.0 \
 	--pkg gio-unix-2.0 \
-	--pkg gee-1.0 \
+	--pkg gee-0.8 \
 	--pkg json-glib-1.0 \
 	--pkg libnotify \
 	--pkg clutter-gtk-1.0 \
@@ -25,7 +25,6 @@ libsynapse_la_VALAFLAGS = \
 	--pkg plugins \
 	--vapidir $(VAPIDIR) \
 	$(VAPIDIR)/indicator3-0.4.vapi \
-	$(VAPIDIR)/keysyms.vapi \
 	$(VAPIDIR)/config.vapi \
 	$(NULL)
 
@@ -52,7 +51,7 @@ libsynapse_la_LDFLAGS = \
 	$(NULL)
 
 if HAVE_INDICATOR
-libsynapse_la_VALAFLAGS += --pkg appindicator-0.1 -D HAVE_INDICATOR
+libsynapse_la_VALAFLAGS += --pkg appindicator3-0.1 -D HAVE_INDICATOR
 libsynapse_la_CFLAGS += $(APP_INDICATOR_CFLAGS)
 libsynapse_la_LIBADD += $(APP_INDICATOR_LIBS)
 endif
@@ -64,7 +63,7 @@ libsynapse_la_LIBADD += $(REST_LIBS)
 endif
 
 if HAVE_ZEITGEIST
-libsynapse_la_VALAFLAGS += --pkg zeitgeist-1.0 -D HAVE_ZEITGEIST
+libsynapse_la_VALAFLAGS += --pkg zeitgeist-2.0 -D HAVE_ZEITGEIST
 libsynapse_la_CFLAGS += $(ZEITGEIST_CFLAGS)
 libsynapse_la_LIBADD += $(ZEITGEIST_LIBS)
 endif

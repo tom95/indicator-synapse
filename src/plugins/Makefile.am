@@ -8,7 +8,7 @@ VAPIDIR = $(top_srcdir)/vapi
 
 libplugins_la_VALAFLAGS = \
 	--pkg gtk+-3.0 \
-	--pkg gee-1.0 \
+	--pkg gee-0.8 \
 	--pkg json-glib-1.0 \
 	--pkg dbus-glib-1 \
 	--pkg gio-unix-2.0 \
@@ -18,6 +18,7 @@ libplugins_la_VALAFLAGS = \
 	--pkg synapse-core \
 	--vapidir $(VAPIDIR) \
 	$(VAPIDIR)/config.vapi \
+	-g \
 	$(NULL)
 
 libplugins_la_CFLAGS = \
@@ -34,6 +35,7 @@ libplugins_la_VALASOURCES = \
 	banshee-plugin.vala \
 	calculator-plugin.vala \
 	chat-actions-plugin.vala \
+	chromium-plugin.vala \
 	command-plugin.vala \
 	file-op-plugin.vala \
 	desktop-file-plugin.vala \
@@ -61,14 +63,14 @@ libplugins_la_VALASOURCES = \
 
 if HAVE_ZEITGEIST
 libplugins_la_VALASOURCES += zeitgeist-plugin.vala zeitgeist-related.vala
-libplugins_la_VALAFLAGS += --pkg zeitgeist-1.0 -D HAVE_ZEITGEIST
+libplugins_la_VALAFLAGS += --pkg zeitgeist-2.0 -D HAVE_ZEITGEIST
 libplugins_la_CFLAGS += $(ZEITGEIST_CFLAGS)
 libplugins_la_LIBADD += $(ZEITGEIST_LIBS)
 endif
 
 if HAVE_LIBREST
 libplugins_la_VALASOURCES += imgur-plugin.vala
-libplugins_la_VALAFLAGS += --pkg rest-fix -D HAVE_LIBREST
+libplugins_la_VALAFLAGS += --pkg rest-0.7 -D HAVE_LIBREST
 libplugins_la_CFLAGS += $(REST_CFLAGS)
 libplugins_la_LIBADD += $(REST_LIBS)
 endif

@@ -1,9 +1,6 @@
 VAPIS = \
-	appindicator-0.1.vapi \
 	config.vapi \
-	gtkhotkey-1.0.vapi \
-	keysyms.vapi \
-	rest-fix.vapi \
+	keybinder-3.0.vapi \
 	$(NULL)
 
 EXTRA_DIST = $(VAPIS)

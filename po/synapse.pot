@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-06-20 11:13+0200\n"
+"POT-Creation-Date: 2014-02-22 19:02+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,10 +18,6 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 
-#: ../data/net.launchpad.synapse-project.gschema.xml.in.in.h:1
-msgid "Shortcut to show the indicator"
-msgstr ""
-
 #: ../data/synapse.desktop.in.h:1
 msgid "Synapse"
 msgstr ""
@@ -30,44 +26,27 @@ msgstr ""
 msgid "Search everything you do."
 msgstr ""
 
-#: ../src/indicator/menu.vala:91 ../src/ui/category.vala:71
-#: ../src/ui/category.vala:115
-msgid "Applications"
-msgstr ""
-
-#: ../src/indicator/menu.vala:94
-msgid "Texts"
-msgstr ""
-
-#: ../src/indicator/menu.vala:97
-msgid "Files"
-msgstr ""
-
-#: ../src/indicator/menu.vala:100 ../src/ui/category.vala:69
-#: ../src/ui/category.vala:112
-msgid "Actions"
-msgstr ""
-
-#: ../src/indicator/menu.vala:103
-msgid "Search"
-msgstr ""
-
-#: ../src/indicator/menu.vala:108
-msgid "Other"
-msgstr ""
-
 #. activate has to stay in first position!
-#: ../src/ui/synapse-main.vala:105 ../src/ui/settings.vala:244
+#: ../src/ui/synapse-main.vala:106 ../src/ui/settings.vala:244
 msgid "Activate"
 msgstr ""
 
+#. Whooot?! This cannot be true!
 #: ../src/ui/category.vala:31 ../src/ui/category.vala:72
 #: ../src/ui/category.vala:135
 msgid "All"
 msgstr ""
 
+#: ../src/ui/category.vala:69 ../src/ui/category.vala:112
+msgid "Actions"
+msgstr ""
+
 #: ../src/ui/category.vala:70 ../src/ui/category.vala:114
 msgid "Audio"
+msgstr ""
+
+#: ../src/ui/category.vala:71 ../src/ui/category.vala:115
+msgid "Applications"
 msgstr ""
 
 #: ../src/ui/category.vala:73 ../src/ui/category.vala:113
@@ -120,7 +99,7 @@ msgstr ""
 msgid "...or press down key to browse recent activities"
 msgstr ""
 
-#: ../src/ui/view-virgilio.vala:188 ../src/ui/widgets-matchlistview.vala:923
+#: ../src/ui/view-virgilio.vala:204 ../src/ui/widgets-matchlistview.vala:934
 #, c-format
 msgid "<b>%d of %d</b>"
 msgstr ""
@@ -288,21 +267,22 @@ msgstr ""
 msgid "Click the shortcut you wish to change and press the new shortcut."
 msgstr ""
 
-#: ../src/ui/widgets-matchlistview.vala:896
-#: ../src/ui/widgets-matchlistview.vala:910
+#: ../src/ui/widgets-matchlistview.vala:907
+#: ../src/ui/widgets-matchlistview.vala:921
 msgid "No results."
 msgstr ""
 
-#: ../src/ui/widgets-matchlistview.vala:915
+#: ../src/ui/widgets-matchlistview.vala:926
 #, c-format
 msgid "<b>1 of %d</b>"
 msgstr ""
 
-#: ../src/ui/utils.vala:115
+#. if is home dir
+#: ../src/ui/utils.vala:132
 msgid "Home"
 msgstr ""
 
-#: ../src/ui/utils.vala:129
+#: ../src/ui/utils.vala:146
 msgid "Root"
 msgstr ""
 
@@ -314,35 +294,35 @@ msgstr ""
 msgid "Run an application, action or script"
 msgstr ""
 
-#: ../src/core/common-actions.vala:132
+#: ../src/core/common-actions.vala:133
 msgid "Run in Terminal"
 msgstr ""
 
-#: ../src/core/common-actions.vala:133
+#: ../src/core/common-actions.vala:134
 msgid "Run application or command in terminal"
 msgstr ""
 
-#: ../src/core/common-actions.vala:180
+#: ../src/core/common-actions.vala:182
 msgid "Open"
 msgstr ""
 
-#: ../src/core/common-actions.vala:181
+#: ../src/core/common-actions.vala:183
 msgid "Open using default application"
 msgstr ""
 
-#: ../src/core/common-actions.vala:250
+#: ../src/core/common-actions.vala:252
 msgid "Open folder"
 msgstr ""
 
-#: ../src/core/common-actions.vala:251
+#: ../src/core/common-actions.vala:253
 msgid "Open folder containing this file"
 msgstr ""
 
-#: ../src/core/common-actions.vala:290
+#: ../src/core/common-actions.vala:293
 msgid "Copy to Clipboard"
 msgstr ""
 
-#: ../src/core/common-actions.vala:291
+#: ../src/core/common-actions.vala:294
 msgid "Copy selection to clipboard"
 msgstr ""
 
@@ -456,6 +436,18 @@ msgstr ""
 msgid "Open chat, or send a message with your favorite IM"
 msgstr ""
 
+#: ../src/plugins/chromium-plugin.vala:79
+msgid "Chromium Plugin"
+msgstr ""
+
+#: ../src/plugins/chromium-plugin.vala:80
+msgid "Browse and open Chromium bookmarks."
+msgstr ""
+
+#: ../src/plugins/chromium-plugin.vala:84
+msgid "Chromium is not installed"
+msgstr ""
+
 #: ../src/plugins/command-plugin.vala:56
 msgid "Run command"
 msgstr ""
@@ -540,20 +532,6 @@ msgstr ""
 msgid "Copy, Cut, Paste and Delete files"
 msgstr ""
 
-#. Plugin title
-#: ../src/plugins/filezilla-plugin.vala:67
-msgid "Connect to Filezilla sites"
-msgstr ""
-
-#: ../src/plugins/filezilla-plugin.vala:72
-msgid "Filezilla is not installed"
-msgstr ""
-
-#: ../src/plugins/filezilla-plugin.vala:186
-#, c-format
-msgid "Connect to %s"
-msgstr ""
-
 #: ../src/plugins/gnome-screensaver-plugin.vala:59
 msgid "Lock Screen"
 msgstr ""
@@ -571,7 +549,9 @@ msgid "Gnome Screen Saver wasn't found"
 msgstr ""
 
 #: ../src/plugins/hybrid-search-plugin.vala:86
-msgid "Improve results returned by the Zeitgeist plugin by looking "
+msgid ""
+"Improve results returned by the Zeitgeist plugin by looking for similar "
+"files on the filesystem."
 msgstr ""
 
 #: ../src/plugins/imgur-plugin.vala:51
@@ -632,16 +612,19 @@ msgstr ""
 msgid "Find bugs and branches on Launchpad."
 msgstr ""
 
+#. project link (lp:synapse)
 #: ../src/plugins/launchpad-plugin.vala:312
 #, c-format
 msgid "Launchpad: Bazaar branches for %s"
 msgstr ""
 
+#. series link (lp:synapse/0.3)
 #: ../src/plugins/launchpad-plugin.vala:319
 #, c-format
 msgid "Launchpad: Series %s for Project %s"
 msgstr ""
 
+#. branch link (lp:~mhr3/synapse/lp-plugin)
 #: ../src/plugins/launchpad-plugin.vala:326
 #, c-format
 msgid "Launchpad: Bazaar branch %s"
@@ -672,6 +655,7 @@ msgstr ""
 msgid "Search the web."
 msgstr ""
 
+#. keep in sync with the internal XMLs!
 #: ../src/plugins/opensearch.vala:264
 msgid "Google"
 msgstr ""
@@ -784,11 +768,15 @@ msgstr ""
 msgid "Connect to host with SSH"
 msgstr ""
 
+#. description
+#. icon name
+#. reference to this function
+#. true if user's system has all required components which the plugin needs
 #: ../src/plugins/ssh-plugin.vala:72
 msgid "ssh is not installed"
 msgstr ""
 
-#: ../src/plugins/ssh-plugin.vala:198
+#: ../src/plugins/ssh-plugin.vala:197
 msgid "Connect with SSH"
 msgstr ""
 
@@ -830,18 +818,6 @@ msgstr ""
 
 #: ../src/plugins/system-management.vala:343
 msgid "ConsoleKit wasn't found"
-msgstr ""
-
-#: ../src/plugins/wolframalpha-plugin.vala:66
-msgid "WolframAlpha"
-msgstr ""
-
-#: ../src/plugins/wolframalpha-plugin.vala:67
-msgid "Process in WolframAlpha"
-msgstr ""
-
-#: ../src/plugins/wolframalpha-plugin.vala:77
-msgid "Process in WolframAlpha."
 msgstr ""
 
 #: ../src/plugins/xnoise-media-player-plugin.vala:59
@@ -935,6 +911,10 @@ msgid "%d week ago"
 msgid_plural "%d weeks ago"
 msgstr[0] ""
 msgstr[1] ""
+
+#: ../src/plugins/zeitgeist-plugin.vala:182
+msgid "long time ago"
+msgstr ""
 
 #: ../src/plugins/zeitgeist-plugin.vala:192
 msgid "Search various items logged by Zeitgeist."

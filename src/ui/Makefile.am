@@ -7,13 +7,13 @@ VAPIDIR = $(top_srcdir)/vapi
 
 synapse_VALAFLAGS = \
 	--pkg dbus-glib-1 \
-	--pkg gtk+-2.0 \
-	--pkg gdk-x11-2.0 \
+	--pkg gtk+-3.0 \
+	--pkg gdk-x11-3.0 \
 	--pkg gio-2.0 \
 	--pkg gio-unix-2.0 \
-	--pkg gee-1.0 \
+	--pkg gee-0.8 \
 	--pkg json-glib-1.0 \
-	--pkg unique-1.0 \
+	--pkg keybinder-3.0 \
 	--pkg libnotify \
 	--vapidir $(top_builddir)/src/core \
 	--pkg synapse-core \
@@ -22,9 +22,8 @@ synapse_VALAFLAGS = \
 	--vapidir $(top_builddir)/src/tile-view \
 	--pkg tile-view \
 	--vapidir $(VAPIDIR) \
-	--pkg gtkhotkey-1.0 \
-	$(VAPIDIR)/keysyms.vapi \
 	$(VAPIDIR)/config.vapi \
+	-g \
 	$(NULL)
 
 synapse_CFLAGS = \
@@ -40,11 +39,11 @@ synapse_LDADD = \
 	$(top_builddir)/src/core/libsynapsecore.la \
 	$(top_builddir)/src/plugins/libplugins.la \
 	$(top_builddir)/src/tile-view/libtileview.la \
-	-lm
+	$(LIBM) \
 	$(NULL)
 
 if HAVE_INDICATOR
-synapse_VALAFLAGS += --pkg appindicator-0.1 -D HAVE_INDICATOR
+synapse_VALAFLAGS += --pkg appindicator3-0.1 -D HAVE_INDICATOR
 synapse_CFLAGS += $(APP_INDICATOR_CFLAGS)
 synapse_LDADD += $(APP_INDICATOR_LIBS)
 endif
@@ -56,7 +55,7 @@ synapse_LDADD += $(REST_LIBS)
 endif
 
 if HAVE_ZEITGEIST
-synapse_VALAFLAGS += --pkg zeitgeist-1.0 -D HAVE_ZEITGEIST
+synapse_VALAFLAGS += --pkg zeitgeist-2.0 -D HAVE_ZEITGEIST
 synapse_CFLAGS += $(ZEITGEIST_CFLAGS)
 synapse_LDADD += $(ZEITGEIST_LIBS)
 endif

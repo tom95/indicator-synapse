@@ -1,11 +1,16 @@
 #!/usr/bin/make -f
 
 %:
-	dh $@ --parallel
+	dh $@ --parallel --with autoreconf
+
+override_dh_autoreconf:
+	dh_autoreconf ./autogen.sh
 
 override_dh_auto_configure:
-	./autogen.sh
 	dh_auto_configure -- --enable-indicator=auto
+
+override_dh_builddeb:
+	dh_builddeb -- -Zxz
 
 override_dh_install:
 	find debian/tmp -name *.la -delete
@@ -13,5 +18,5 @@ override_dh_install:
 	dh_install --fail-missing
 
 override_dh_strip:
-	dh_strip --dbg-package=indicator-synapse-dbg
+	dh_strip --dbg-package=synapse-dbg
 
