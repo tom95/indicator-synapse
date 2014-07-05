@@ -18,5 +18,6 @@ override_dh_install:
 	dh_install --fail-missing
 
 override_dh_strip:
-	dh_strip --dbg-package=synapse-dbg
+	dh_strip -p synapse --dbg-package=synapse-dbg
+	dh_strip -p indicator-synapse --dbg-package=indicator-synapse-dbg
 

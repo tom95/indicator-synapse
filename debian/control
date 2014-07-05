@@ -12,9 +12,11 @@ Build-Depends: debhelper (>= 9),
  libglib2.0-dev (>= 2.28.0),
  libgee-0.8-dev (>= 0.5.2),
  libjson-glib-dev (>= 0.10.0),
+ libsoup2.4-dev,
  libkeybinder-3.0-dev,
  libnotify-dev,
  librest-dev,
+ libindicator3-dev,
  libappindicator3-dev (>= 0.0.7)
 Vcs-Bzr: http://bazaar.launchpad.net/~synapse-core/synapse-project/trunk/
 Vcs-Browser: http://bazaar.launchpad.net/~synapse-core/synapse-project/trunk/files
@@ -47,3 +49,32 @@ Description: semantic file launcher - debug package
  Zeitgeist engine).
  .
  This package contains the debug symbols.
+
+Package: indicator-synapse
+Architecture: any
+Depends: ${shlibs:Depends},
+         ${misc:Depends},
+Recommends: zeitgeist (>= 0.9.14) | zeitgeist-core (>= 0.9.14),
+ consolekit,
+ pastebinit,
+ upower
+Description: semantic file launcher
+ Synapse is a graphical launcher enabling you to start applications and also
+ to quickly find and access relevant documents and files (by making use of the
+ Zeitgeist engine).
+ .
+ This package contain the indicator plugin.
+
+Package: indicator-synapse-dbg
+Architecture: any
+Section: debug
+Priority: extra
+Depends: synapse (= ${binary:Version}),
+         ${shlibs:Depends},
+         ${misc:Depends}
+Description: semantic file launcher - debug package
+ Synapse is a graphical launcher enabling you to start applications and also
+ to quickly find and access relevant documents and files (by making use of the
+ Zeitgeist engine).
+ .
+ This package contains the debug symbols of the indicator plugin.
