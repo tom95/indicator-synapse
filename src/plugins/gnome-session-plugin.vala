@@ -19,7 +19,7 @@
  *
  */
 
-namespace Synapse
+namespace SynapseIndicator
 {
   [DBus (name = "org.gnome.SessionManager")]
   public interface GnomeSessionManager: Object

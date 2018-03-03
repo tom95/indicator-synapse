@@ -19,7 +19,7 @@
  *
  */
 
-namespace Synapse
+namespace SynapseIndicator
 {
   [DBus (name = "org.bansheeproject.Banshee.PlayerEngine")]
   interface BansheePlayerEngine : Object {

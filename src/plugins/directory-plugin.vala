@@ -24,7 +24,7 @@
  * used. 
  */
 
-namespace Synapse
+namespace SynapseIndicator
 {
   public class DirectoryPlugin: Object, Activatable, ItemProvider
   {

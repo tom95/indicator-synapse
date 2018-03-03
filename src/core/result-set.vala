@@ -18,7 +18,7 @@
  *
  */
 
-namespace Synapse
+namespace SynapseIndicator
 {
   public class ResultSet : Object, Gee.Traversable<Match>, Gee.Iterable <Gee.Map.Entry <Match, int>>
   {
@@ -57,7 +57,7 @@ namespace Synapse
       owned get { return matches.entries; }
     }
 
-    public Gee.Iterator<Gee.Map.Entry <Match, int>?> iterator ()
+    public Gee.Iterator<Gee.Map.Entry <Match, int>> iterator ()
     {
       return matches.iterator ();
     }

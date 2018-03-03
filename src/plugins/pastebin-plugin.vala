@@ -19,7 +19,7 @@
  *
  */
 
-namespace Synapse
+namespace SynapseIndicator
 {
   public class PastebinPlugin: Object, Activatable, ActionProvider
   {

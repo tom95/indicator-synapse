@@ -1,113 +1,102 @@
 
-public class Main : Object
+public class Main : Wingpanel.Indicator
 {
 	// backend synapse initialization
 	Type[] plugins = {
-        typeof (Synapse.DesktopFilePlugin),
-        typeof (Synapse.HybridSearchPlugin),
-        typeof (Synapse.GnomeSessionPlugin),
-        typeof (Synapse.GnomeScreenSaverPlugin),
-        typeof (Synapse.SystemManagementPlugin),
-        typeof (Synapse.CommandPlugin),
-        typeof (Synapse.RhythmboxActions),
-        typeof (Synapse.BansheeActions),
-        typeof (Synapse.DirectoryPlugin),
-        typeof (Synapse.LaunchpadPlugin),
-        typeof (Synapse.CalculatorPlugin),
-        typeof (Synapse.SelectionPlugin),
-        typeof (Synapse.SshPlugin),
-        typeof (Synapse.XnoiseActions),
-#if HAVE_ZEITGEIST
-        typeof (Synapse.ZeitgeistPlugin),
-        typeof (Synapse.ZeitgeistRelated),
-#endif
-#if HAVE_LIBREST
-        typeof (Synapse.ImgUrPlugin),
-#endif
+        typeof (SynapseIndicator.DesktopFilePlugin),
+        typeof (SynapseIndicator.HybridSearchPlugin),
+        typeof (SynapseIndicator.GnomeSessionPlugin),
+        typeof (SynapseIndicator.GnomeScreenSaverPlugin),
+        typeof (SynapseIndicator.SystemManagementPlugin),
+        typeof (SynapseIndicator.CommandPlugin),
+        typeof (SynapseIndicator.RhythmboxActions),
+        typeof (SynapseIndicator.BansheeActions),
+        typeof (SynapseIndicator.DirectoryPlugin),
+        typeof (SynapseIndicator.LaunchpadPlugin),
+        typeof (SynapseIndicator.CalculatorPlugin),
+        typeof (SynapseIndicator.SelectionPlugin),
+        typeof (SynapseIndicator.SshPlugin),
+        typeof (SynapseIndicator.XnoiseActions),
+        typeof (SynapseIndicator.ZeitgeistPlugin),
+        typeof (SynapseIndicator.ZeitgeistRelated),
+        // typeof (SynapseIndicator.ImgUrPlugin), appears disfunctional atm
         // action-only plugins
-        typeof (Synapse.DevhelpPlugin),
-        typeof (Synapse.OpenSearchPlugin),
-        // typeof (Synapse.LocatePlugin),
-        typeof (Synapse.PastebinPlugin),
-        typeof (Synapse.DictionaryPlugin),
-		typeof (Synapse.FilezillaPlugin),
-		typeof (Synapse.WolframAlphaPlugin)
+        typeof (SynapseIndicator.DevhelpPlugin),
+        typeof (SynapseIndicator.OpenSearchPlugin),
+        typeof (SynapseIndicator.LocatePlugin),
+        typeof (SynapseIndicator.PastebinPlugin),
+        typeof (SynapseIndicator.DictionaryPlugin),
+	typeof (SynapseIndicator.FilezillaPlugin),
+	typeof (SynapseIndicator.WolframAlphaPlugin)
 	};
 
-	public static Synapse.DataSink sink;
-	public Menu menu { get; private set; }
+	public static SynapseIndicator.DataSink sink;
 
-	string? current_shortcut;
+	private Wingpanel.Widgets.OverlayIcon? indicator_icon = null;
+	private Menu? popover_widget = null;
+
+	const string CODE_NAME = "de.tombeckmann.synapse";
+
 	Cancellable? current_search = null;
 
-	public Main ()
-	{
-		sink = new Synapse.DataSink ();
+	public Main (Wingpanel.IndicatorManager.ServerType server_type) {
+		Object (code_name: CODE_NAME,
+			display_name: _("Synapse"),
+			description: _("Synapse Search Indicator"));
+
+		sink = new SynapseIndicator.DataSink ();
 		foreach (var plugin in plugins) {
 			sink.register_static_plugin (plugin);
 		}
+	}
 
-		menu = new Menu ();
+	public override Gtk.Widget get_display_widget () {
+		if (indicator_icon == null) {
+			indicator_icon = new Wingpanel.Widgets.OverlayIcon ("edit-find-symbolic");
+		}
 
-		// our ui
-		menu.search.connect ((text) => {
-			if (current_search != null) {
+		return indicator_icon;
+	}
+
+	public override Gtk.Widget? get_widget () {
+		if (popover_widget == null) {
+			popover_widget = new Menu ();
+			popover_widget.close.connect (() => {close (); print("restuqest close\n"); });
+
+			popover_widget.search.connect ((text) => {
+			    if (current_search != null) {
 				current_search.cancel ();
 				current_search = null;
-			}
+			    }
 
-			sink.search.begin (text, Synapse.QueryFlags.ALL, null, current_search, (obj, res) =>  {
+			    sink.search.begin (text, SynapseIndicator.QueryFlags.ALL, null, current_search, (obj, res) =>  {
 				try {
-					var matches = sink.search.end (res);
-					menu.show_matches (matches);
+				    var matches = sink.search.end (res);
+				    popover_widget.show_matches (matches);
 				} catch (Error e) { warning (e.message); }
+			    });
 			});
-		});
+		}
 
-		// shortcut
-		Keybinder.init ();
-		update_shortcut ();
+		visible = true;
+
+		return popover_widget;
 	}
 
-	public void update_shortcut ()
-	{
-		current_shortcut = "<super><alt>space";
-		Keybinder.bind (current_shortcut, handle_shortcut, this);
+	public override void opened () {
+		if (popover_widget != null) {
+		    popover_widget.focused ();
+		}
 	}
 
-	public void show_menu ()
-	{
-		(menu.get_attach_widget () as Gtk.MenuItem).activate_item ();
-		menu.deselect ();
+	public override void closed () {
 	}
 }
 
-public static Gdk.Pixbuf? find_icon (string name, int size)
-{
-	try {
-		var icon = Icon.new_for_string (name);
-		if (icon == null)
-			return null;
-		var info = Gtk.IconTheme.get_default ().lookup_by_gicon (icon, size, Gtk.IconLookupFlags.FORCE_SIZE);
-		if (info == null)
-			return null;
-		return info.load_icon ();
-	} catch (Error e) { warning (e.message); }
+public Wingpanel.Indicator? get_indicator (Module module, Wingpanel.IndicatorManager.ServerType server_type) {
+    debug ("Activating Synapse Indicator");
 
-	return null;
-}
-
-public static void handle_shortcut (string key, void* data)
-{
-	var self = (Main)data;
-	// unfortunately things are not that easy here. Gtk throws an error about no device
-	// when trying to grab. Waiting until the key is released solves this problem, so
-	// we keep checking if we see something already
-	Idle.add (() => {
-		if (!self.menu.visible)
-			self.show_menu ();
-		return !self.menu.visible;
-	});
-	self.show_menu ();
+    var indicator = new Main (server_type);
+    return indicator;
 }
 

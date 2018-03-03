@@ -18,7 +18,7 @@
  *
  */
 
-namespace Synapse
+namespace SynapseIndicator
 {
   [DBus (name = "org.freedesktop.DBus")]
   public interface FreeDesktopDBus : GLib.Object

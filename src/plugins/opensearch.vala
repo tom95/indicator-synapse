@@ -19,7 +19,7 @@
  *
  */
 
-namespace Synapse
+namespace SynapseIndicator
 {
   // verbatim string
   private const string GOOGLE_SEARCH_XML = """
@@ -173,7 +173,7 @@ namespace Synapse
       public string thumbnail_path { get; construct set; }
       public MatchType match_type { get; construct set; }
       
-      public int default_relevancy { get; set; default = Match.Score.INCREMENT_MINOR; }
+      public int default_relevancy { get; set; default = Match.Score.INCREMENT_SMALL; }
       public string query_template { get; construct set; }
 
       public void execute (Match? match)

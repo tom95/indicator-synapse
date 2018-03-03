@@ -15,7 +15,7 @@
  * with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
  
-namespace Synapse
+namespace SynapseIndicator
 {
 
   public class ChromiumPlugin : Object, Activatable, ItemProvider

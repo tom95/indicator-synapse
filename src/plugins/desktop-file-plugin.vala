@@ -19,7 +19,7 @@
  *
  */
 
-namespace Synapse
+namespace SynapseIndicator
 {
   public class DesktopFilePlugin: Object, Activatable, ItemProvider, ActionProvider
   {
@@ -103,7 +103,7 @@ namespace Synapse
     construct
     {
       desktop_files = new Gee.ArrayList<DesktopFileMatch> ();
-      mimetype_map = new Gee.HashMap<string, OpenWithAction> ();
+      mimetype_map = new Gee.HashMap<string, Gee.List<OpenWithAction>> ();
 
       var dfs = DesktopFileService.get_default ();
       dfs.reload_started.connect (() => {

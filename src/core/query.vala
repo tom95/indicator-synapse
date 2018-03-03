@@ -18,7 +18,7 @@
  *
  */
 
-namespace Synapse
+namespace SynapseIndicator
 {
   [Flags]
   public enum QueryFlags

@@ -18,7 +18,7 @@
  *
  */
 
-namespace Synapse
+namespace SynapseIndicator
 {
   public interface RelevancyBackend: Object
   {

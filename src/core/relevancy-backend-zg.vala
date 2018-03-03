@@ -18,7 +18,7 @@
  *
  */
 
-namespace Synapse
+namespace SynapseIndicator
 {
   private class ZeitgeistRelevancyBackend: Object, RelevancyBackend
   {

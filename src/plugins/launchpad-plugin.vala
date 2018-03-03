@@ -19,7 +19,7 @@
  *
  */
 
-namespace Synapse
+namespace SynapseIndicator
 {
   public class LaunchpadPlugin: Object, Activatable, ItemProvider //, Configurable, ActionProvider
   {

@@ -18,7 +18,7 @@
  *
  */
 
-namespace Synapse
+namespace SynapseIndicator
 {
   [CCode (gir_namespace = "SynapseUtils", gir_version = "1.0")]
   namespace Utils

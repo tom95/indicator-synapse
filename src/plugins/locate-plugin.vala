@@ -19,7 +19,7 @@
  *
  */
 
-namespace Synapse
+namespace SynapseIndicator
 {
   public class LocatePlugin: Object, Activatable, ActionProvider
   {
@@ -69,7 +69,7 @@ namespace Synapse
       public string thumbnail_path { get; construct set; }
       public MatchType match_type { get; construct set; }
 
-      public int default_relevancy { get; set; default = Match.Score.INCREMENT_SMALL; }
+      public int default_relevancy { get; set; default = Match.Score.INCREMENT_MINOR; }
       // for SearchMatch interface
       public Match search_source { get; set; }
       public async Gee.List<Match> search (string query,
@@ -144,6 +144,7 @@ namespace Synapse
       q.max_results = 256;
       string regex = Regex.escape_string (q.query_string);
       // FIXME: split pattern into words and search using --regexp?
+      // should definitely find a way to filter hidden files out right away
       string[] argv = {"locate", "-i", "-l", "%u".printf (q.max_results),
                        "*%s*".printf (regex.replace (" ", "*"))};
 
@@ -153,6 +154,8 @@ namespace Synapse
       {
         Pid pid;
         int read_fd;
+
+        print ("%s\n", string.joinv (" ", argv));
 
         // FIXME: fork on every letter... yey!
         Process.spawn_async_with_pipes (null, argv, null,

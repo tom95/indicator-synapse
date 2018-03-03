@@ -20,7 +20,7 @@
  *
  */
 
-namespace Synapse
+namespace SynapseIndicator
 {
   public class WolframAlphaPlugin: Object, Activatable, ActionProvider
   {
@@ -53,7 +53,7 @@ namespace Synapse
         try
         {
           AppInfo.launch_default_for_uri ("https://www.wolframalpha.com/input/?i=" + (Soup.URI.encode (match.title, "+").replace (" ", "+")),
-				  new Gdk.AppLaunchContext ());
+            Gdk.Display.get_default ().get_app_launch_context ());
         }
         catch (Error err)
         {
@@ -114,7 +114,7 @@ namespace Synapse
         {
           if (matcher.key.match (action.title))
           {
-            results.add (action, Match.Score.AVERAGE);
+            results.add (action, action.default_relevancy);
             break;
           }
         }

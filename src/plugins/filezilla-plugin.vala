@@ -21,7 +21,7 @@
 
 using Gee;
 
-namespace Synapse
+namespace SynapseIndicator
 {
   public class FilezillaPlugin: Object, Activatable, ItemProvider
   {
@@ -170,7 +170,7 @@ namespace Synapse
           AppInfo ai = AppInfo.create_from_commandline (
             "filezilla --site=\"0%s\"".printf (this.title),
             "filezilla", 0);
-          ai.launch (null, new Gdk.AppLaunchContext ());
+          ai.launch (null, Gdk.Display.get_default ().get_app_launch_context ());
         }
         catch (Error err)
         {

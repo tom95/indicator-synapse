@@ -21,7 +21,7 @@
 
 using Zeitgeist;
 
-namespace Synapse
+namespace SynapseIndicator
 {
   public class ZeitgeistRelated: Object, Activatable, ActionProvider
   {

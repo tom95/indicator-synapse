@@ -19,7 +19,7 @@
  *
  */
 
-namespace Synapse
+namespace SynapseIndicator
 {
   // There are two basic plugin interfaces - ItemProvider and ActionProvider
   //

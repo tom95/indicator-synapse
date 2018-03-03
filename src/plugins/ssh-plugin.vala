@@ -21,7 +21,7 @@
 
 using Gee;
 
-namespace Synapse
+namespace SynapseIndicator
 {
   public class SshPlugin: Object, Activatable, ItemProvider
   {

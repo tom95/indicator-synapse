@@ -18,7 +18,7 @@
  *             Alberto Aldegheri <albyrock87+dev@gmail.com>
  */
 
-namespace Synapse
+namespace SynapseIndicator
 {
   public enum MatchType
   {

@@ -19,7 +19,7 @@
  *
  */
 
-namespace Synapse
+namespace SynapseIndicator
 {
   [DBus (name = "org.freedesktop.UPower")]
   public interface UPowerObject: Object

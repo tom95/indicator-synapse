@@ -20,7 +20,7 @@
  *
  */
 
-namespace Synapse
+namespace SynapseIndicator
 {
   [DBus (name = "org.gnome.Rhythmbox.Shell")]
   interface RhythmboxShell : Object {

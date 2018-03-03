@@ -1,87 +1,138 @@
 
-public class Menu : Gtk.Menu
+public class Menu : Gtk.Grid
 {
+	const string SEARCH_VIEW = "search";
+	const string CONTEXT_VIEW = "context";
+
+	public const double STROKE_ALPHA = 0.2;
+
 	Gtk.Entry entry;
 	MatchItem entry_item;
 
+	SelectableList results;
+	SelectableList context_results;
+	Gtk.Stack stack;
+
 	public signal void search (string text);
+	public signal void close ();
 
 	public Menu ()
 	{
-		reserve_toggle_size = false;
-		take_focus = true;
+		orientation = Gtk.Orientation.VERTICAL;
+
+		stack = new Gtk.Stack ();
+		stack.transition_type = Gtk.StackTransitionType.SLIDE_LEFT_RIGHT;
 
 		entry = new Gtk.Entry ();
+		entry.hexpand = true;
 
 		entry.primary_icon_name = "edit-find-symbolic";
-		entry_item = new MatchItem ("Search:", entry, true);
-		append (entry_item);
+		entry_item = new MatchItem.with_widget (_("Search:"), entry, true);
+		add (entry_item);
 
-		// block any clicks on the item
-		entry_item.button_release_event.connect ((e) => { return true; });
-		entry_item.button_press_event.connect ((e) => { return true; });
+		// forward any clicks on the item
+		entry_item.button_release_event.connect ((e) => { entry.button_release_event (e); return true; });
+		entry_item.motion_notify_event.connect ((e) => { entry.motion_notify_event (e); return true; });
+		entry_item.button_press_event.connect ((e) => { entry.button_press_event (e); return true; });
 		entry_item.draw.connect ((cr) => {
-			if (get_children ().length () < 2)
+			if (results.num_entries () < 1)
 				return false;
 
 			cr.move_to (0, entry_item.get_allocated_height () - 0.5);
 			cr.rel_line_to (entry_item.get_allocated_width (), 0);
 			cr.set_line_width (1);
-			cr.set_source_rgba (0, 0, 0, 0.2);
+			cr.set_source_rgba (0, 0, 0, STROKE_ALPHA);
 			cr.stroke ();
 			return false;
 		});
 
-		key_press_event.connect ((e) => {
+		entry.key_press_event.connect ((e) => {
 			switch (e.keyval) {
-				case Gdk.Key.Escape:
-				case Gdk.Key.Up:
+				case Gdk.Key.Left:
+					stack.visible_child_name = SEARCH_VIEW;
+					return true;
+				case Gdk.Key.Right:
+				case Gdk.Key.Tab:
+					if (stack.visible_child_name == CONTEXT_VIEW)
+						activate_selected ();
+					else
+						show_context_menu ();
+					return true;
 				case Gdk.Key.Down:
+					get_active_result_list ().selected_search_result++;
+					return true;
+				case Gdk.Key.Up:
+					get_active_result_list ().selected_search_result--;
+					return true;
 				case Gdk.Key.Return:
 				case Gdk.Key.KP_Enter:
+					activate_selected ();
+					return true;
+				case Gdk.Key.Escape:
+					if (stack.visible_child_name != SEARCH_VIEW) {
+						stack.visible_child_name = SEARCH_VIEW;
+						return true;
+					}
 					return false;
-				case Gdk.Key.Left:
-				case Gdk.Key.Right:
-					show_context_menu ();
-					return true;
 				default:
-					entry.key_press_event (e);
-					if (entry.text == "")
-						clear ();
-					else
-						search (entry.text);
-					return true;
+					if (stack.visible_child_name != SEARCH_VIEW)
+						stack.visible_child_name = SEARCH_VIEW;
+					return false;
 			}
 		});
 
-		move_current.connect ((dir) => {
-			// see if the next item will be the search entry
-			var next = get_children ().index (get_selected_item ()) +
-				(dir == Gtk.MenuDirectionType.NEXT ? 1 : -1);
-			// if so, select it so the move which comes after we're
-			// done here will skip it
-			if (next == 0 || next == get_children ().length ()) {
-				select_item (entry_item);
-			}
+		entry.changed.connect (() => {
+			if (entry.text == "")
+				clear ();
+			else
+				search (entry.text);
 		});
+
+		results = new SelectableList ();
+		var scroll = new Wingpanel.Widgets.AutomaticScrollBox ();
+		results.scroll = scroll;
+		scroll.add (results);
+
+		context_results = new SelectableList ();
+
+		stack.add_named (scroll, SEARCH_VIEW);
+		stack.add_named (context_results, CONTEXT_VIEW);
+		add (stack);
 
 		width_request = 480;
 	}
 
-	public override void show ()
-	{
-		clear ();
-		entry.text = "";
-		base.show ();
-		grab_focus ();
+	void activate_selected () {
+		(get_active_result_list ().selected_item () as MatchItem).activate ();
+	}
+
+	SelectableList get_active_result_list () {
+		if (stack.visible_child_name == SEARCH_VIEW)
+			return results;
+		else
+			return context_results;
+	}
+
+	public void focused () {
 		entry.grab_focus ();
 	}
 
-	public void show_matches (Gee.List<Synapse.Match> matches)
+	Gtk.Label? nothing_found_label = null;
+
+	public void show_matches (Gee.List<SynapseIndicator.Match> matches)
 	{
 		clear ();
 
-		entry_item.outer_box.margin_bottom = 12;
+		if (nothing_found_label != null)
+			nothing_found_label.destroy ();
+
+		if (matches.size < 1) {
+			nothing_found_label = new Gtk.Label (_("No results for this query."));
+			nothing_found_label.margin_top = nothing_found_label.margin_bottom = 6;
+			nothing_found_label.show ();
+			add (nothing_found_label);
+			return;
+		}
 
 		var current_type = -2;
 		foreach (var match in matches) {
@@ -91,22 +142,22 @@ public class Menu : Gtk.Menu
 				if (current_type != match.match_type) {
 					current_type = match.match_type;
 					switch (current_type) {
-						case Synapse.MatchType.APPLICATION:
+						case SynapseIndicator.MatchType.APPLICATION:
 							title = _("Applications");
 							break;
-						case Synapse.MatchType.TEXT:
+						case SynapseIndicator.MatchType.TEXT:
 							title = _("Texts");
 							break;
-						case Synapse.MatchType.GENERIC_URI:
+						case SynapseIndicator.MatchType.GENERIC_URI:
 							title = _("Files");
 							break;
-						case Synapse.MatchType.ACTION:
+						case SynapseIndicator.MatchType.ACTION:
 							title = _("Actions");
 							break;
-						case Synapse.MatchType.SEARCH:
+						case SynapseIndicator.MatchType.SEARCH:
 							title = _("Search");
 							break;
-						case Synapse.MatchType.UNKNOWN:
+						case SynapseIndicator.MatchType.UNKNOWN:
 							break;
 						default:
 							title = _("Other");
@@ -116,11 +167,12 @@ public class Menu : Gtk.Menu
 			} else
 				current_type = -1;
 
-			if (match.match_type == Synapse.MatchType.UNKNOWN) {
-				var actions = Main.sink.find_actions_for_match (match, null, Synapse.QueryFlags.ALL);
+			if (match.match_type == SynapseIndicator.MatchType.UNKNOWN) {
+				var actions = Main.sink.find_actions_for_match (match, null, SynapseIndicator.QueryFlags.ALL);
 				foreach (var action in actions) {
 					var item = new MatchItem.with_action (action, match, tophit);
-					append (item);
+					item.menu = this;
+					results.add (item);
 					// if we are the tophit, only make the first item large
 					if (tophit)
 						tophit = false;
@@ -130,69 +182,59 @@ public class Menu : Gtk.Menu
 			}
 
 			var item = new MatchItem.with_match (match, title, tophit);
-			append (item);
+			item.menu = this;
+			results.add (item);
 		}
 		show_all ();
-		select_item (get_children ().nth_data (1));
+		results.selected_search_result = 0;
 	}
 
 	public void clear ()
 	{
-		entry_item.outer_box.margin_bottom = 0;
-		foreach (var child in get_children ()) {
-			if (child == entry_item)
-				continue;
-			child.destroy ();
-		}
+		context_results.clear ();
+		results.clear ();
 	}
 
-	public void do_search (Synapse.Match match, Synapse.Match target)
+	public void do_search (SynapseIndicator.Match match, SynapseIndicator.Match target)
 	{
 		clear ();
 
-		var search = match as Synapse.SearchMatch;
+		stack.visible_child_name = SEARCH_VIEW;
+
+		var search = match as SynapseIndicator.SearchMatch;
 		search.search_source = target;
 
-		search.search (entry.text, Synapse.QueryFlags.ALL, null, null, (obj, res) => {
-			var matches = search.search.end (res);
-			show_matches (matches);
+		var last = new SynapseIndicator.ResultSet ();
+		search.search.begin (entry.text, SynapseIndicator.QueryFlags.ALL, last, null, (obj, res) => {
+			try {
+				var matches = search.search.end (res);
+				show_matches (matches);
+			} catch (Error e) {
+				// FIXME is this likely? do smth more user friendly?
+				warning (e.message);
+			}
 		});
 	}
 
-	public void show_context_menu ()
+	public void show_context_menu (MatchItem? selected = null)
 	{
-		var active = get_selected_item () as MatchItem;
-		var menu = new Gtk.Menu ();
-		menu.key_press_event.connect (take_arrow_keys);
+		if (stack.visible_child_name == CONTEXT_VIEW)
+			return;
 
-		var actions = Main.sink.find_actions_for_match (active.match, null, Synapse.QueryFlags.ALL);
+		context_results.clear ();
+
+		var active = selected ?? results.selected_item () as MatchItem;
+
+		var actions = Main.sink.find_actions_for_match (active.match, null, SynapseIndicator.QueryFlags.ALL);
 		foreach (var action in actions) {
 			var item = new MatchItem.contextual (action, active.match, false);
-			menu.append (item);
+			item.menu = this;
+			context_results.add (item);
 		}
 
-		menu.show_all ();
-		active.submenu = menu;
-		active.activate_item ();
-	}
-
-	bool take_arrow_keys (Gtk.Widget menu, Gdk.EventKey event)
-	{
-		switch (event.keyval) {
-			case Gdk.Key.Left:
-			case Gdk.Key.Right:
-				(menu as Gtk.Menu).popdown ();
-				menu.destroy ();
-				return true;
-			case Gdk.Key.Return:
-				var item = (menu as Gtk.Menu).get_selected_item () as MatchItem;
-				var is_search = item.match.match_type == Synapse.MatchType.SEARCH;
-				if (is_search)
-					do_search (item.match, item.target);
-				return is_search;
-		}
-
-		return false;
+		stack.visible_child_name = CONTEXT_VIEW;
+		context_results.selected_search_result = 0;
+		context_results.show_all ();
 	}
 }
 

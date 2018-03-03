@@ -19,7 +19,7 @@
  *
  */
 
-namespace Synapse
+namespace SynapseIndicator
 {
   public class ZeitgeistPlugin: Object, Activatable, ItemProvider
   {

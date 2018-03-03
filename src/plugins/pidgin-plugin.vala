@@ -20,7 +20,7 @@
  *
  */
 
-namespace Synapse
+namespace SynapseIndicator
 {
   [DBus (name = "im.pidgin.purple.PurpleInterface")]
   interface PurpleInterface : Object {

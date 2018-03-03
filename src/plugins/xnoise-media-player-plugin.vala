@@ -19,7 +19,7 @@
  *
  */
 
-namespace Synapse
+namespace SynapseIndicator
 {
   [DBus (name = "org.gtk.xnoise.PlayerEngine")]
   private interface XnoisePlayerEngine : Object

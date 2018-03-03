@@ -19,7 +19,7 @@
  *
  */
 
-namespace Synapse
+namespace SynapseIndicator
 {
   public class FileOpPlugin: Object, Activatable, ActionProvider
   {

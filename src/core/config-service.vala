@@ -20,7 +20,7 @@
 
 using Json;
 
-namespace Synapse
+namespace SynapseIndicator
 {
   public abstract class ConfigObject : GLib.Object
   {
