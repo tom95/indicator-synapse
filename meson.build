@@ -83,6 +83,6 @@ shared_module(
         wingpanel_dep
     ],
     install: true,
-    install_dir : '/usr/lib/x86_64-linux-gnu/wingpanel' #wingpanel_dep.get_pkgconfig_variable('indicatorsdir')
+    install_dir : get_option('libdir') + '/wingpanel' #'/usr/lib/x86_64-linux-gnu/wingpanel' #wingpanel_dep.get_pkgconfig_variable('indicatorsdir')
 )
 
