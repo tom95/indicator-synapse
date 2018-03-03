@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright 2018 Tom Beckmann <tomjonabc@gmail.com> -->
+<component type="desktop">
+  <id>de.tombeckmann.synapse</id>
+  <metadata_license>GPLv3</metadata_license>
+  <name>Indicator Search</name>
+  <summary>Synapse-powered search indicator for your panel.</summary>
+  <description>
+    <p>A search indicator for your wingpanel. Powered by Synapse.</p>
+	<p>To add a shortcut, go to your keyboard settings and add a custom shortcut with the following command:</p>
+	<em>wingpanel --toggle-indicator=de.tombeckmann.synapse</em>
+  </description>
+</component>
+
