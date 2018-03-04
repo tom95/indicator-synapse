@@ -1,11 +1,11 @@
-Source: synapse
-Section: utils
-Priority: optional
-Maintainer: Julien Lavergne <gilir@ubuntu.com>
-Build-Depends: debhelper (>= 9),
- dh-autoreconf,
- gnome-common,
- valac (>= 0.16.0),
+Source: de.tombeckmann.synapse
+Section: x11
+Priority: extra
+Maintainer: Tom Beckmann <tomjonabc@gmail.com>
+Build-Depends: debhelper (>= 10.5.1),
+ gettext,
+ meson,
+ valac (>= 0.36.12),
  libzeitgeist-2.0-dev (>= 0.9.14),
  libdbus-glib-1-dev,
  libgtk-3-dev (>= 3.0.0),
@@ -18,12 +18,10 @@ Build-Depends: debhelper (>= 9),
  librest-dev,
  libindicator3-dev,
  libappindicator3-dev (>= 0.0.7)
-Vcs-Bzr: http://bazaar.launchpad.net/~synapse-core/synapse-project/trunk/
-Vcs-Browser: http://bazaar.launchpad.net/~synapse-core/synapse-project/trunk/files
-Homepage: https://launchpad.net/synapse-project
+Homepage: https://github.com/tom95/indicator-synapse
 Standards-Version: 3.9.5
 
-Package: synapse
+Package: de.tombeckmann.synapse
 Architecture: any
 Depends: ${shlibs:Depends},
          ${misc:Depends},
@@ -31,50 +29,5 @@ Recommends: zeitgeist (>= 0.9.14) | zeitgeist-core (>= 0.9.14),
  consolekit,
  pastebinit,
  upower
-Description: semantic file launcher
- Synapse is a graphical launcher enabling you to start applications and also
- to quickly find and access relevant documents and files (by making use of the
- Zeitgeist engine).
-
-Package: synapse-dbg
-Architecture: any
-Section: debug
-Priority: extra
-Depends: synapse (= ${binary:Version}),
-         ${shlibs:Depends},
-         ${misc:Depends}
-Description: semantic file launcher - debug package
- Synapse is a graphical launcher enabling you to start applications and also
- to quickly find and access relevant documents and files (by making use of the
- Zeitgeist engine).
- .
- This package contains the debug symbols.
-
-Package: indicator-synapse
-Architecture: any
-Depends: ${shlibs:Depends},
-         ${misc:Depends},
-Recommends: zeitgeist (>= 0.9.14) | zeitgeist-core (>= 0.9.14),
- consolekit,
- pastebinit,
- upower
-Description: semantic file launcher
- Synapse is a graphical launcher enabling you to start applications and also
- to quickly find and access relevant documents and files (by making use of the
- Zeitgeist engine).
- .
- This package contain the indicator plugin.
-
-Package: indicator-synapse-dbg
-Architecture: any
-Section: debug
-Priority: extra
-Depends: synapse (= ${binary:Version}),
-         ${shlibs:Depends},
-         ${misc:Depends}
-Description: semantic file launcher - debug package
- Synapse is a graphical launcher enabling you to start applications and also
- to quickly find and access relevant documents and files (by making use of the
- Zeitgeist engine).
- .
- This package contains the debug symbols of the indicator plugin.
+Description: search indicator
+ A search indicator for your wingpanel. Powered by Synapse.

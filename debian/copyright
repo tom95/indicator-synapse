@@ -31,8 +31,12 @@ License: GPL-3+
 
 Files: debian/*
 Copyright:
- 2010, Michal Hruby <michal.mhr@gmail.com>,
- 2010, Julien Lavergne <gilir@ubuntu.com>
+ 2018, Tom Beckmann <tomjonabc@gmail>
+License: GPL-3+
+
+Files: src/indicator/*
+Copyright:
+ 2018, Tom Beckmann <tomjonabc@gmail>
 License: GPL-3+
 
 License: GPL-3+

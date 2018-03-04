@@ -1,23 +1,13 @@
 #!/usr/bin/make -f
+# -*- makefile -*-
+# Sample debian/rules that uses debhelper.
+# This file was originally written by Joey Hess and Craig Small.
+# As a special exception, when this file is copied by dh-make into a
+# dh-make output file, you may use that output file without restriction.
+# This special exception was added by Craig Small in version 0.37 of dh-make.
+
+#export DH_VERBOSE=1
 
 %:
-	dh $@ --parallel --with autoreconf
-
-override_dh_autoreconf:
-	dh_autoreconf ./autogen.sh
-
-override_dh_auto_configure:
-	dh_auto_configure -- --enable-indicator=auto
-
-override_dh_builddeb:
-	dh_builddeb -- -Zxz
-
-override_dh_install:
-	find debian/tmp -name *.la -delete
-	find debian/tmp -name *.a -delete
-	dh_install --fail-missing
-
-override_dh_strip:
-	dh_strip -p synapse --dbg-package=synapse-dbg
-	dh_strip -p indicator-synapse --dbg-package=indicator-synapse-dbg
+	dh $@ 
 
