@@ -1,5 +1,5 @@
-indicator-synapse (0.0.1) precise; urgency=low
+de.tombeckmann.synapse (0.1) precise; urgency=low
 
   * Initial Release.
 
- -- Tom Beckmann <tomjonabc@gmail.com>  Sun, 04 Mar 2018 09:45 +0100
+ -- Tom Beckmann <tomjonabc@gmail.com>  Sun, 04 Mar 2018 09:45:00 +0100
