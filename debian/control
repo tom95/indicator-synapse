@@ -1,4 +1,4 @@
-Source: de.tombeckmann.synapse
+Source: com.github.tom95.indicator-synapse
 Section: x11
 Priority: extra
 Maintainer: Tom Beckmann <tomjonabc@gmail.com>
@@ -18,7 +18,7 @@ Build-Depends: debhelper (>= 10.2.2),
 Homepage: https://github.com/tom95/indicator-synapse
 Standards-Version: 4.1.1
 
-Package: de.tombeckmann.synapse
+Package: com.github.tom95.indicator-synapse
 Architecture: any
 Depends: ${shlibs:Depends},
          ${misc:Depends},

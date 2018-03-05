@@ -7,7 +7,7 @@ i18n = import('i18n')
 add_global_arguments('-DGETTEXT_PACKAGE="@0@"'.format(gettext_name), language:'c')
 
 #asresources = gnome.compile_resources(
-    #'as-resources', 'data/de.tombeckmann.password-indicator.gresource.xml',
+    #'as-resources', 'data/com.github.tom95.indicator-synapse.gresource.xml',
     #source_dir: 'data',
     #c_name: 'as'
 #)

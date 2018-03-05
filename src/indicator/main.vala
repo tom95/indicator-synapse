@@ -54,7 +54,7 @@ public class Main : Wingpanel.Indicator
 	private Wingpanel.Widgets.OverlayIcon? indicator_icon = null;
 	private Menu? popover_widget = null;
 
-	const string CODE_NAME = "de.tombeckmann.synapse";
+	const string CODE_NAME = "com.github.tom95.indicator-synapse";
 
 	Cancellable? current_search = null;
 

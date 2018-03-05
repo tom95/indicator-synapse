@@ -27,7 +27,6 @@ public class SelectableList : Gtk.Grid
 	    return _selected_search_result;
 	}
 	set {
-	    var children = get_children ();
 	    if (_selected_search_result >= 0) {
 		nth_item (_selected_search_result).set_state_flags (Gtk.StateFlags.NORMAL, true);
 	    }
