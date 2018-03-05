@@ -3,28 +3,27 @@ Section: x11
 Priority: extra
 Maintainer: Tom Beckmann <tomjonabc@gmail.com>
 Build-Depends: debhelper (>= 10.2.2),
- gettext,
- meson,
- cmake (>= 2.8),
- valac (>= 0.36.12),
- libzeitgeist-2.0-dev (>= 0.9.14),
- libgtk-3-dev (>= 3.0.0),
- libnotify-dev (>= 0.7.6),
- librest-dev (>= 0.7.93),
- libglib2.0-dev (>= 2.28.0),
- libgee-0.8-dev (>= 0.5.2),
- libjson-glib-dev (>= 0.10.0),
- libkeybinder-3.0-dev
-Homepage: https://github.com/tom95/indicator-synapse
+               gettext,
+               meson,
+               cmake (>= 2.8),
+               valac (>= 0.36.12),
+               libzeitgeist-2.0-dev (>= 0.9.14),
+               libgtk-3-dev (>= 3.0.0),
+               libnotify-dev (>= 0.7.6),
+               librest-dev (>= 0.7.93),
+               libglib2.0-dev (>= 2.28.0),
+               libgee-0.8-dev (>= 0.5.2),
+               libjson-glib-dev (>= 0.10.0),
+               libkeybinder-3.0-dev
 Standards-Version: 3.9.7
+Homepage: https://github.com/tom95/indicator-synapse
 
 Package: com.github.tom95.indicator-synapse
 Architecture: any
 Depends: ${shlibs:Depends},
          ${misc:Depends},
 Recommends: zeitgeist (>= 0.9.14) | zeitgeist-core (>= 0.9.14),
- consolekit,
- pastebinit,
- upower
-Description: search indicator
- A search indicator for your wingpanel. Powered by Synapse.
+            consolekit,
+            pastebinit,
+            upower
+Description: A search indicator for your wingpanel. Powered by Synapse.
