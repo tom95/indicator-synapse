@@ -16,7 +16,7 @@ Build-Depends: debhelper (>= 10.2.2),
  libjson-glib-dev (>= 0.10.0),
  libkeybinder-3.0-dev
 Homepage: https://github.com/tom95/indicator-synapse
-Standards-Version: 4.1.1
+Standards-Version: 3.9.7
 
 Package: com.github.tom95.indicator-synapse
 Architecture: any

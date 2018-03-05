@@ -22,7 +22,7 @@
     <pre>wingpanel --toggle-indicator=com.github.tom95.indicator-synapse</pre>
   </description>
   <releases>
-    <release version="0.1.0" date="2018-03-04">
+    <release version="0.1.1" date="2018-03-04">
       <description>
         Beta Release
       </description>
