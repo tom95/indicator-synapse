@@ -1,0 +1,3 @@
+#!/bin/bash
+
+wingpanel --toggle-indicator=com.github.tom95.indicator-synapse

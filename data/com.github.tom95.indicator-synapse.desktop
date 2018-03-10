@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Name=Synapse Indicator
+Comment=Search through a variety of resources
+GenericName=Search Utility
+Exec=com.github.tom95.indicator-synapse %U
+Icon=com.github.tom95.indicator-synapse
+Terminal=false
+Categories=GNOME;GTK;Utility;

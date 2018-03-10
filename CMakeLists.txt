@@ -45,7 +45,8 @@ configure_file(
 add_custom_target(uninstall
     COMMAND ${CMAKE_COMMAND} -P ${CMAKE_CURRENT_BINARY_DIR}/Uninstall.cmake)
 
-install (FILES ${CMAKE_CURRENT_SOURCE_DIR}/data/com.github.tom95.indicator-synapse.appdata.xml DESTINATION ${CMAKE_INSTALL_PREFIX}/share/metainfo/)
+install (FILES ${CMAKE_CURRENT_SOURCE_DIR}/data/com.github.tom95.indicator-synapse.appdata.xml DESTINATION ${CMAKE_INSTALL_FULL_DATAROOTDIR}/share/metainfo/)
+install (FILES ${CMAKE_CURRENT_SOURCE_DIR}/data/com.github.tom95.indicator-synapse.desktop DESTINATION ${CMAKE_INSTALL_FULL_DATAROOTDIR}/applications)
 
 install (FILES data/icons/com.github.tom95.indicator-synapse.svg DESTINATION ${CMAKE_INSTALL_FULL_DATAROOTDIR}/icons/hicolor/)
 install (FILES data/icons/16/com.github.tom95.indicator-synapse.png DESTINATION ${CMAKE_INSTALL_FULL_DATAROOTDIR}/icons/hicolor/16x16/apps/)
@@ -56,4 +57,4 @@ install (FILES data/icons/com.github.tom95.indicator-synapse.svg DESTINATION ${C
 install (FILES data/icons/com.github.tom95.indicator-synapse.svg DESTINATION ${CMAKE_INSTALL_FULL_DATAROOTDIR}/icons/hicolor/128x128/apps/)
 
 # work around elementary/houston requiring an installed "binary"
-install (FILES data/com.github.tom95.indicator-synapse DESTINATION ${CMAKE_INSTALL_PREFIX}/bin)
+install (PROGRAMS data/com.github.tom95.indicator-synapse DESTINATION ${CMAKE_INSTALL_PREFIX}/bin)
