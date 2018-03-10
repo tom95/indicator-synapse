@@ -56,5 +56,4 @@ install (FILES data/icons/com.github.tom95.indicator-synapse.svg DESTINATION ${C
 install (FILES data/icons/com.github.tom95.indicator-synapse.svg DESTINATION ${CMAKE_INSTALL_FULL_DATAROOTDIR}/icons/hicolor/128x128/apps/)
 
 # work around elementary/houston requiring an installed "binary"
-set (FULL_INSTALL $ENV{DESTDIR}${CMAKE_INSTALL_PREFIX})
-install (CODE "FILE(WRITE ${FULL_INSTALL}/bin/com.github.tom95.indicator-synapse \"\")")
+install (FILES data/com.github.tom95.indicator-synapse DESTINATION ${CMAKE_INSTALL_PREFIX}/bin)
