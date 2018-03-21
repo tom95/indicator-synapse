@@ -1,5 +1,11 @@
 com.github.tom95.indicator-synapse (0.1.1) xenial; urgency=low
 
+  * Packaging and deploy to launchpad
+
+ -- Tom Beckmann <tomjonabc@gmail.com>  Mon, 21 Mar 2018 16:43:00 +0100
+
+com.github.tom95.indicator-synapse (0.1.1) xenial; urgency=low
+
   * Update to new RDNN, publish data for appcenter.
 
  -- Tom Beckmann <tomjonabc@gmail.com>  Mon, 05 Mar 2018 09:25:00 +0100
