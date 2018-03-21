@@ -1,4 +1,4 @@
-com.github.tom95.indicator-synapse (0.1.1) xenial; urgency=low
+com.github.tom95.indicator-synapse (0.1.2) xenial; urgency=low
 
   * Packaging and deploy to launchpad
 
