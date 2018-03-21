@@ -1,0 +1,4 @@
+#!/bin/bash
+
+sleep 0.4
+wingpanel --toggle-indicator=com.github.tom95.indicator-synapse
