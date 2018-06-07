@@ -9,3 +9,11 @@ To open the indicator via shortcut, add a custom shortcut in your keyboard setti
 ```
 wingpanel --toggle-indicator=com.github.tom95.indicator-synapse
 ```
+### Build instructions
+```
+mkdir build
+cd build
+cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_INSTALL_PREFIX=/usr ../
+make   
+sudo make install
+```
